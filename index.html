@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Our Little Princess's World 💕</title>
+    <style>
+        :root {
+            --bg-color: #fcf8f2;
+            --card-bg: #ffffff;
+            --primary-pink: #f4cfcb;
+            --accent-rose: #d68c85;
+            --text-dark: #3a302f;
+            --text-muted: #8c7b79;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Georgia', serif; /* Elegant, storytelling font */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.8;
+            padding: 20px;
+            /* Smooth background gradient for a cozy feel */
+            background-image: radial-gradient(circle at top right, #fff5f3 0%, var(--bg-color) 100%);
+        }
+
+        .header {
+            text-align: center;
+            max-width: 700px;
+            margin: 50px auto 30px auto;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Photo Showcase Section */
+        .photo-wrapper {
+            max-width: 450px;
+            margin: 0 auto 50px auto;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .baby-photo {
+            width: 100%;
+            height: auto;
+            border-radius: 50% 50% 20px 20px; /* Unique soft frame */
+            border: 8px solid white;
+            box-shadow: 0 15px 35px rgba(214, 140, 133, 0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .baby-photo:hover {
+            transform: scale(1.02);
+        }
+
+        /* Grid Layout */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto 80px auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(74, 62, 61, 0.03);
+            border: 1px solid rgba(244, 207, 203, 0.3);
+        }
+
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 400;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #f4cfcb;
+            padding-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        /* Shortlist Styling */
+        .name-list {
+            list-style: none;
+        }
+
+        .name-item {
+            padding: 15px 20px;
+            background: #fdfbf7;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid var(--primary-pink);
+        }
+
+        .name-meaning {
+            font-size: 0.9rem;
+            font-weight: normal;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Form Container */
+        .form-container {
+            position: relative;
+            width: 100%;
+            height: 520px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 12px;
+        }
+
+        /* Floating Audio Controller */
+        .audio-player-container {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .audio-player-container span {
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            letter-spacing: 0.5px;
+        }
+
+        audio {
+            height: 30px;
+            width: 220px;
+        }
+
+        /* Fade-in Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            .header h1 {
+                font-size: 2.1rem;
+            }
+            .photo-wrapper {
+                max-width: 85%;
+            }
+            body {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Background Music Bar -->
+    <div class="audio-player-container">
+        <span>🎵 Play Background Music:</span>
+        <!-- REPLACE THE SRC LINK WITH YOUR MUSIC FILE LINK -->
+        <audio id="bg-music" controls loop>
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <div class="header">
+        <h1>Help Us Name Our Daughter! 🌸</h1>
+        <p>A grand adventure is about to begin, and our hearts are so full. Take a moment, listen to the music, and help us choose the perfect name for our little girl.</p>
+    </div>
+
+    <!-- Baby Photo Showcase -->
+    <div class="photo-wrapper">
+        <!-- REPLACE THE IMAGE LINK WITH YOUR BABY'S PHOTO -->
+        <img class="baby-photo" src="https://images.unsplash.com/photo-1519689680058-324335c77ebd?w=600" alt="Our Baby Girl">
+    </div>
+
+    <div class="container">
+        
+        <!-- Left Column: Shortlist -->
+        <div class="card">
+            <h2>✨ Our Current Shortlist</h2>
+            <ul class="name-list">
+                <li class="name-item">Ananya <span class="name-meaning">Matchless, Unique</span></li>
+                <li class="name-item">Diya <span class="name-meaning">Light, Brightness</span></li>
+                <li class="name-item">Kiara <span class="name-meaning">Bright, Clear</span></li>
+                <li class="name-item">Mira <span class="name-meaning">Prosperous, Peace</span></li>
+                <li class="name-item">Riya <span class="name-meaning">Graceful, Singer</span></li>
+            </ul>
+        </div>
+
+        <!-- Right Column: Form Embed -->
+        <div class="card">
+            <h2>✍️ Leave Your Suggestion & Blessings</h2>
+            <div class="form-container">
+                <!-- REPLACE WITH YOUR GOOGLE FORM LINK -->
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfD5q9m-RkR4Fv_J1s-YourFormIDHere/viewform?embedded=true">Loading…</iframe>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Softly sets the volume to a low, soothing level (20% volume) automatically on load
+        const audio = document.getElementById('bg-music');
+        audio.volume = 0.2;
+    </script>
+
+</body>
+</html>
