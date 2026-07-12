@@ -14,8 +14,6 @@
             --text-muted: #8c7b79;
             --success-green: #e2f0d9;
             --success-text: #385723;
-            --danger-red: #fce4e4;
-            --danger-text: #c00000;
         }
 
         * {
@@ -157,25 +155,9 @@
             color: var(--text-muted);
         }
 
-        .action-btns {
-            display: flex;
-            gap: 8px;
-        }
-
         .promote-btn {
             background: var(--success-green);
             color: var(--success-text);
-            border: none;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .remove-btn {
-            background: var(--danger-red);
-            color: var(--danger-text);
             border: none;
             padding: 6px 12px;
             border-radius: 20px;
@@ -232,7 +214,6 @@
 
     <div class="container">
         
-        <!-- Left Column: Shortlist -->
         <div class="card">
             <h2>✨ Our Shortlist</h2>
             <ul class="name-list" id="shortlist-container">
@@ -251,7 +232,6 @@
             </ul>
         </div>
 
-        <!-- Right Column: Form & Submissions -->
         <div class="card">
             <h2>✍️ Suggest a Name ('V' or 'Ve')</h2>
             <form id="nameForm" style="margin-bottom: 30px;">
@@ -268,8 +248,7 @@
 
             <h2>📥 Recent Suggestions</h2>
             <ul class="name-list" id="suggestions-container">
-                <!-- Dynamic Content -->
-            </ul>
+                </ul>
         </div>
 
     </div>
@@ -304,6 +283,8 @@
                 suggestEl.innerHTML = "";
 
                 data.forEach(item => {
+                    // Skips blank/deleted cells instantly
+                    if (!item.name || item.name.toString().trim() === "") return;
                     if (item.name === 'Vedanshi' || item.name === 'Vrindha') return;
 
                     if(item.status === 'shortlist') {
@@ -313,7 +294,6 @@
                                     <h4>${item.name}</h4>
                                     <p>${item.meaning}</p>
                                 </div>
-                                <button class="remove-btn" onclick="removeName('${item.name}')">❌ Remove</button>
                             </li>`;
                     } else {
                         suggestEl.innerHTML += `
@@ -322,10 +302,7 @@
                                     <h4>${item.name}</h4>
                                     <p>${item.meaning}</p>
                                 </div>
-                                <div class="action-btns">
-                                    <button class="promote-btn" onclick="promoteName('${item.name}')">✨ Promote</button>
-                                    <button class="remove-btn" onclick="removeName('${item.name}')">❌</button>
-                                </div>
+                                <button class="promote-btn" onclick="promoteName('${item.name}')">✨ Promote</button>
                             </li>`;
                     }
                 });
@@ -359,19 +336,6 @@
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ action: 'promote', name, password })
-            });
-            setTimeout(loadNames, 1000);
-        }
-
-        async function removeName(name) {
-            const password = prompt("Enter password to confirm removal:");
-            if (!password) return;
-
-            await fetch(BACKEND_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: 'remove', name, password })
             });
             setTimeout(loadNames, 1000);
         }
