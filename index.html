@@ -14,6 +14,8 @@
             --text-muted: #8c7b79;
             --success-green: #e2f0d9;
             --success-text: #385723;
+            --danger-red: #fce4e4;
+            --danger-text: #c00000;
         }
 
         * {
@@ -155,9 +157,25 @@
             color: var(--text-muted);
         }
 
+        .action-btns {
+            display: flex;
+            gap: 8px;
+        }
+
         .promote-btn {
             background: var(--success-green);
             color: var(--success-text);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .remove-btn {
+            background: var(--danger-red);
+            color: var(--danger-text);
             border: none;
             padding: 6px 12px;
             border-radius: 20px;
@@ -250,7 +268,7 @@
 
             <h2>📥 Recent Suggestions</h2>
             <ul class="name-list" id="suggestions-container">
-                <!-- Live family suggestions show up here without page refresh -->
+                <!-- Dynamic Content -->
             </ul>
         </div>
 
@@ -259,7 +277,6 @@
     <script>
         document.getElementById('bg-music').volume = 0.12; 
 
-        // YOUR LIVE INTERACTIVE GOOGLE SCRIPT LINK ATTACHED
         const BACKEND_URL = "https://script.google.com/macros/s/AKfycbwQgmI8521IDWBWFUPDcj4CbjkAj7JeZ_7DffIARDNiT1Y6vCc1KdxKC1eg7EC_NqsrdQ/exec";
 
         async function loadNames() {
@@ -296,6 +313,7 @@
                                     <h4>${item.name}</h4>
                                     <p>${item.meaning}</p>
                                 </div>
+                                <button class="remove-btn" onclick="removeName('${item.name}')">❌ Remove</button>
                             </li>`;
                     } else {
                         suggestEl.innerHTML += `
@@ -304,7 +322,10 @@
                                     <h4>${item.name}</h4>
                                     <p>${item.meaning}</p>
                                 </div>
-                                <button class="promote-btn" onclick="promoteName('${item.name}')">✨ Promote</button>
+                                <div class="action-btns">
+                                    <button class="promote-btn" onclick="promoteName('${item.name}')">✨ Promote</button>
+                                    <button class="remove-btn" onclick="removeName('${item.name}')">❌</button>
+                                </div>
                             </li>`;
                     }
                 });
@@ -338,6 +359,19 @@
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ action: 'promote', name, password })
+            });
+            setTimeout(loadNames, 1000);
+        }
+
+        async function removeName(name) {
+            const password = prompt("Enter password to confirm removal:");
+            if (!password) return;
+
+            await fetch(BACKEND_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'remove', name, password })
             });
             setTimeout(loadNames, 1000);
         }
