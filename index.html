@@ -51,7 +51,6 @@
             line-height: 1.6;
         }
 
-        /* Photo Showcase Section */
         .photo-wrapper {
             max-width: 380px;
             margin: 0 auto 50px auto;
@@ -198,15 +197,15 @@
 <body>
 
     <div class="audio-player-container">
-        <span>🎵 Soft Lullaby:</span>
+        <span>🎵 Calm Melodies:</span>
         <audio id="bg-music" controls loop>
-            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" type="audio/mpeg">
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
         </audio>
     </div>
 
     <div class="header">
         <h1>Help Us Name Our Daughter! 🌸</h1>
-        <p>Our little princess safely stepped into our lives on <strong>24th March 2026</strong>. We are profoundly blessed to have her; she has immediately filled our world with an entirely new meaning. Take a moment, enjoy the soft melody, and leave your favorite name suggestion or blessing below!</p>
+        <p>Our little princess arrived on 24-Mar-2026. Help us choose a beautiful name starting with <strong>'V'</strong> or <strong>'Ve'</strong>!</p>
     </div>
 
     <div class="photo-wrapper">
@@ -215,37 +214,52 @@
 
     <div class="container">
         
+        <!-- Left Column: Shortlist -->
         <div class="card">
             <h2>✨ Our Shortlist</h2>
             <ul class="name-list" id="shortlist-container">
-                </ul>
+                <li class="name-item">
+                    <div class="name-info">
+                        <h4>Vedanshi</h4>
+                        <p>A part of the Sacred Knowledge</p>
+                    </div>
+                </li>
+                <li class="name-item">
+                    <div class="name-info">
+                        <h4>Vrindha</h4>
+                        <p>Tulsi / Holy Basil</p>
+                    </div>
+                </li>
+            </ul>
         </div>
 
+        <!-- Right Column: Form & Submissions -->
         <div class="card">
-            <h2>✍️ Suggest a Name</h2>
+            <h2>✍️ Suggest a Name ('V' or 'Ve')</h2>
             <form id="nameForm" style="margin-bottom: 30px;">
                 <div class="form-group">
                     <label>Suggested Name</label>
-                    <input type="text" id="inputName" placeholder="e.g., Ananya" required>
+                    <input type="text" id="inputName" placeholder="e.g., Vedika" required>
                 </div>
                 <div class="form-group">
-                    <label>Meaning or Your Name</label>
-                    <input type="text" id="inputMeaning" placeholder="e.g., Unique / Uncle Ramesh">
+                    <label>Meaning or Your Name (optional)</label>
+                    <input type="text" id="inputMeaning" placeholder="e.g., Consciousness / Uncle Ramesh">
                 </div>
                 <button type="submit" class="submit-btn">Submit Suggestion</button>
             </form>
 
             <h2>📥 Recent Suggestions</h2>
             <ul class="name-list" id="suggestions-container">
-                </ul>
+                <!-- Live family suggestions show up here without page refresh -->
+            </ul>
         </div>
 
     </div>
 
     <script>
-        document.getElementById('bg-music').volume = 0.15;
+        document.getElementById('bg-music').volume = 0.12; 
 
-        // PASTE YOUR GOOGLE SHEET WEB APP URL HERE
+        // YOUR LIVE INTERACTIVE GOOGLE SCRIPT LINK ATTACHED
         const BACKEND_URL = "https://script.google.com/macros/s/AKfycbwQgmI8521IDWBWFUPDcj4CbjkAj7JeZ_7DffIARDNiT1Y6vCc1KdxKC1eg7EC_NqsrdQ/exec";
 
         async function loadNames() {
@@ -257,10 +271,24 @@
                 const shortlistEl = document.getElementById('shortlist-container');
                 const suggestEl = document.getElementById('suggestions-container');
                 
-                shortlistEl.innerHTML = "";
+                shortlistEl.innerHTML = `
+                    <li class="name-item">
+                        <div class="name-info">
+                            <h4>Vedanshi</h4>
+                            <p>A part of the Sacred Knowledge</p>
+                        </div>
+                    </li>
+                    <li class="name-item">
+                        <div class="name-info">
+                            <h4>Vrindha</h4>
+                            <p>Tulsi / Holy Basil</p>
+                        </div>
+                    </li>`;
                 suggestEl.innerHTML = "";
 
                 data.forEach(item => {
+                    if (item.name === 'Vedanshi' || item.name === 'Vrindha') return;
+
                     if(item.status === 'shortlist') {
                         shortlistEl.innerHTML += `
                             <li class="name-item">
