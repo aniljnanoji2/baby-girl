@@ -12,13 +12,15 @@
             --accent-rose: #d68c85;
             --text-dark: #3a302f;
             --text-muted: #8c7b79;
+            --success-green: #e2f0d9;
+            --success-text: #385723;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Georgia', serif; /* Elegant, storytelling font */
+            font-family: 'Georgia', serif;
         }
 
         body {
@@ -26,15 +28,13 @@
             color: var(--text-dark);
             line-height: 1.8;
             padding: 20px;
-            /* Smooth background gradient for a cozy feel */
             background-image: radial-gradient(circle at top right, #fff5f3 0%, var(--bg-color) 100%);
         }
 
         .header {
             text-align: center;
-            max-width: 700px;
-            margin: 50px auto 30px auto;
-            animation: fadeIn 1.5s ease-in-out;
+            max-width: 750px;
+            margin: 60px auto 30px auto;
         }
 
         .header h1 {
@@ -45,33 +45,27 @@
         }
 
         .header p {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             color: var(--text-muted);
             font-style: italic;
+            line-height: 1.6;
         }
 
         /* Photo Showcase Section */
         .photo-wrapper {
-            max-width: 450px;
+            max-width: 380px;
             margin: 0 auto 50px auto;
             text-align: center;
-            animation: fadeIn 2s ease-in-out;
         }
 
         .baby-photo {
             width: 100%;
             height: auto;
-            border-radius: 50% 50% 20px 20px; /* Unique soft frame */
+            border-radius: 50% 50% 20px 20px;
             border: 8px solid white;
-            box-shadow: 0 15px 35px rgba(214, 140, 133, 0.15);
-            transition: transform 0.3s ease;
+            box-shadow: 0 15px 35px rgba(214, 140, 133, 0.12);
         }
 
-        .baby-photo:hover {
-            transform: scale(1.02);
-        }
-
-        /* Grid Layout */
         .container {
             max-width: 1100px;
             margin: 0 auto 80px auto;
@@ -94,54 +88,91 @@
             margin-bottom: 25px;
             border-bottom: 1px solid #f4cfcb;
             padding-bottom: 15px;
-            letter-spacing: 1px;
         }
 
-        /* Shortlist Styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ebdcd9;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .submit-btn {
+            background: var(--accent-rose);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: #c57b74;
+        }
+
         .name-list {
             list-style: none;
+            max-height: 450px;
+            overflow-y: auto;
         }
 
         .name-item {
-            padding: 15px 20px;
+            padding: 15px;
             background: #fdfbf7;
             margin-bottom: 12px;
             border-radius: 12px;
-            font-weight: bold;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-left: 4px solid var(--primary-pink);
         }
 
-        .name-meaning {
-            font-size: 0.9rem;
-            font-weight: normal;
+        .suggested-item {
+            border-left: 4px solid var(--text-muted);
+        }
+
+        .name-info h4 {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .name-info p {
+            font-size: 0.85rem;
             color: var(--text-muted);
-            font-style: italic;
         }
 
-        /* Form Container */
-        .form-container {
-            position: relative;
-            width: 100%;
-            height: 520px;
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
+        .promote-btn {
+            background: var(--success-green);
+            color: var(--success-text);
             border: none;
-            border-radius: 12px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            font-weight: bold;
         }
 
-        /* Floating Audio Controller */
         .audio-player-container {
             position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
             padding: 10px 20px;
             border-radius: 30px;
@@ -150,97 +181,141 @@
             align-items: center;
             gap: 15px;
             z-index: 1000;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-
-        .audio-player-container span {
-            font-size: 0.85rem;
-            color: var(--text-dark);
-            letter-spacing: 0.5px;
         }
 
         audio {
             height: 30px;
-            width: 220px;
+            width: 200px;
         }
 
-        /* Fade-in Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Mobile Adjustments */
         @media (max-width: 768px) {
-            .container {
-                grid-template-columns: 1fr;
-                gap: 25px;
-            }
-            .header h1 {
-                font-size: 2.1rem;
-            }
-            .photo-wrapper {
-                max-width: 85%;
-            }
-            body {
-                padding: 15px;
-            }
+            .container { grid-template-columns: 1fr; gap: 25px; }
+            .header h1 { font-size: 2.1rem; }
+            .photo-wrapper { max-width: 80%; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Floating Background Music Bar -->
     <div class="audio-player-container">
-        <span>🎵 Play Background Music:</span>
-        <!-- REPLACE THE SRC LINK WITH YOUR MUSIC FILE LINK -->
+        <span>🎵 Soft Lullaby:</span>
         <audio id="bg-music" controls loop>
-            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" type="audio/mpeg">
         </audio>
     </div>
 
     <div class="header">
         <h1>Help Us Name Our Daughter! 🌸</h1>
-        <p>A grand adventure is about to begin, and our hearts are so full. Take a moment, listen to the music, and help us choose the perfect name for our little girl.</p>
+        <p>Our little princess safely stepped into our lives on <strong>24th March 2026</strong>. We are profoundly blessed to have her; she has immediately filled our world with an entirely new meaning. Take a moment, enjoy the soft melody, and leave your favorite name suggestion or blessing below!</p>
     </div>
 
-    <!-- Baby Photo Showcase -->
     <div class="photo-wrapper">
-        <!-- REPLACE THE IMAGE LINK WITH YOUR BABY'S PHOTO -->
-        <img class="baby-photo" src="https://images.unsplash.com/photo-1519689680058-324335c77ebd?w=600" alt="Our Baby Girl">
+        <img class="baby-photo" src="baby.jpg" alt="Our Beautiful Daughter">
     </div>
 
     <div class="container">
         
-        <!-- Left Column: Shortlist -->
         <div class="card">
-            <h2>✨ Our Current Shortlist</h2>
-            <ul class="name-list">
-                <li class="name-item">Ananya <span class="name-meaning">Matchless, Unique</span></li>
-                <li class="name-item">Diya <span class="name-meaning">Light, Brightness</span></li>
-                <li class="name-item">Kiara <span class="name-meaning">Bright, Clear</span></li>
-                <li class="name-item">Mira <span class="name-meaning">Prosperous, Peace</span></li>
-                <li class="name-item">Riya <span class="name-meaning">Graceful, Singer</span></li>
-            </ul>
+            <h2>✨ Our Shortlist</h2>
+            <ul class="name-list" id="shortlist-container">
+                </ul>
         </div>
 
-        <!-- Right Column: Form Embed -->
         <div class="card">
-            <h2>✍️ Leave Your Suggestion & Blessings</h2>
-            <div class="form-container">
-                <!-- REPLACE WITH YOUR GOOGLE FORM LINK -->
-                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfD5q9m-RkR4Fv_J1s-YourFormIDHere/viewform?embedded=true">Loading…</iframe>
-            </div>
+            <h2>✍️ Suggest a Name</h2>
+            <form id="nameForm" style="margin-bottom: 30px;">
+                <div class="form-group">
+                    <label>Suggested Name</label>
+                    <input type="text" id="inputName" placeholder="e.g., Ananya" required>
+                </div>
+                <div class="form-group">
+                    <label>Meaning or Your Name</label>
+                    <input type="text" id="inputMeaning" placeholder="e.g., Unique / Uncle Ramesh">
+                </div>
+                <button type="submit" class="submit-btn">Submit Suggestion</button>
+            </form>
+
+            <h2>📥 Recent Suggestions</h2>
+            <ul class="name-list" id="suggestions-container">
+                </ul>
         </div>
 
     </div>
 
     <script>
-        // Softly sets the volume to a low, soothing level (20% volume) automatically on load
-        const audio = document.getElementById('bg-music');
-        audio.volume = 0.2;
-    </script>
+        document.getElementById('bg-music').volume = 0.15;
 
+        // PASTE YOUR GOOGLE SHEET WEB APP URL HERE
+        const BACKEND_URL = "YOUR_GOOGLE_SCRIPT_URL_HERE";
+
+        async function loadNames() {
+            if(BACKEND_URL.includes("YOUR_GOOGLE")) return;
+            try {
+                const res = await fetch(BACKEND_URL);
+                const data = await res.json();
+                
+                const shortlistEl = document.getElementById('shortlist-container');
+                const suggestEl = document.getElementById('suggestions-container');
+                
+                shortlistEl.innerHTML = "";
+                suggestEl.innerHTML = "";
+
+                data.forEach(item => {
+                    if(item.status === 'shortlist') {
+                        shortlistEl.innerHTML += `
+                            <li class="name-item">
+                                <div class="name-info">
+                                    <h4>${item.name}</h4>
+                                    <p>${item.meaning}</p>
+                                </div>
+                            </li>`;
+                    } else {
+                        suggestEl.innerHTML += `
+                            <li class="name-item suggested-item">
+                                <div class="name-info">
+                                    <h4>${item.name}</h4>
+                                    <p>${item.meaning}</p>
+                                </div>
+                                <button class="promote-btn" onclick="promoteName('${item.name}')">✨ Promote</button>
+                            </li>`;
+                    }
+                });
+            } catch(e) { console.error(e); }
+        }
+
+        document.getElementById('nameForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('inputName').value;
+            const meaning = document.getElementById('inputMeaning').value;
+
+            await fetch(BACKEND_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'suggest', name, meaning })
+            });
+
+            document.getElementById('inputName').value = "";
+            document.getElementById('inputMeaning').value = "";
+            alert("Thank you! Suggestion added.");
+            setTimeout(loadNames, 1000);
+        });
+
+        async function promoteName(name) {
+            const password = prompt("Enter your secret password to promote this name:");
+            if (!password) return;
+
+            await fetch(BACKEND_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'promote', name, password })
+            });
+            setTimeout(loadNames, 1000);
+        }
+
+        setInterval(loadNames, 5000);
+        loadNames();
+    </script>
 </body>
 </html>
