@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Our Little Princess's World 💕</title>
+    <title>The Grand Name Hunt! 💕</title>
     <style>
         :root {
-            --bg-color: #fcf8f2;
+            --bg-color: #fff9f6;
             --card-bg: #ffffff;
-            --primary-pink: #f4cfcb;
-            --accent-rose: #d68c85;
-            --text-dark: #3a302f;
-            --text-muted: #8c7b79;
+            --primary-pink: #ffdcd7;
+            --accent-rose: #e59890;
+            --text-dark: #4a3b39;
+            --text-muted: #9c8785;
             --success-green: #e2f0d9;
             --success-text: #385723;
         }
@@ -28,19 +28,19 @@
             color: var(--text-dark);
             line-height: 1.8;
             padding: 20px;
-            background-image: radial-gradient(circle at top right, #fff5f3 0%, var(--bg-color) 100%);
+            background-image: radial-gradient(circle at top right, #fff0ec 0%, var(--bg-color) 100%);
         }
 
         .header {
             text-align: center;
             max-width: 750px;
-            margin: 60px auto 30px auto;
+            margin: 50px auto 20px auto;
         }
 
         .header h1 {
-            font-size: 2.8rem;
+            font-size: 2.6rem;
             color: var(--text-dark);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             font-weight: 400;
         }
 
@@ -51,18 +51,20 @@
             line-height: 1.6;
         }
 
-        .photo-wrapper {
-            max-width: 380px;
-            margin: 0 auto 50px auto;
+        /* Fun Cartoon Mascot Section */
+        .mascot-wrapper {
             text-align: center;
+            margin: 10px auto 40px auto;
+            font-size: 5rem;
+            animation: float 3s ease-in-out infinite;
+            display: block;
+            width: fit-content;
         }
 
-        .baby-photo {
-            width: 100%;
-            height: auto;
-            border-radius: 50% 50% 20px 20px;
-            border: 8px solid white;
-            box-shadow: 0 15px 35px rgba(214, 140, 133, 0.12);
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(3deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
         }
 
         .container {
@@ -77,16 +79,17 @@
             background: var(--card-bg);
             border-radius: 24px;
             padding: 40px;
-            box-shadow: 0 10px 40px rgba(74, 62, 61, 0.03);
-            border: 1px solid rgba(244, 207, 203, 0.3);
+            box-shadow: 0 10px 40px rgba(229, 152, 144, 0.05);
+            border: 2px dashed rgba(244, 207, 203, 0.6);
         }
 
         .card h2 {
             font-size: 1.6rem;
             font-weight: 400;
             margin-bottom: 25px;
-            border-bottom: 1px solid #f4cfcb;
+            border-bottom: 2px solid #ffdcd7;
             padding-bottom: 15px;
+            color: #c4736a;
         }
 
         .form-group {
@@ -98,14 +101,21 @@
             margin-bottom: 8px;
             font-size: 0.95rem;
             color: var(--text-muted);
+            font-weight: bold;
         }
 
         .form-group input {
             width: 100%;
             padding: 12px 15px;
-            border: 1px solid #ebdcd9;
-            border-radius: 10px;
+            border: 2px solid #f5e6e3;
+            border-radius: 12px;
             font-size: 1rem;
+            background-color: #fffdfc;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-rose);
         }
 
         .submit-btn {
@@ -114,14 +124,16 @@
             border: none;
             padding: 12px 25px;
             border-radius: 30px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             cursor: pointer;
             width: 100%;
-            transition: background 0.2s;
+            transition: transform 0.2s, background 0.2s;
+            box-shadow: 0 5px 15px rgba(229, 152, 144, 0.3);
         }
 
         .submit-btn:hover {
-            background: #c57b74;
+            background: #d6847b;
+            transform: scale(1.02);
         }
 
         .name-list {
@@ -132,26 +144,28 @@
 
         .name-item {
             padding: 15px;
-            background: #fdfbf7;
+            background: #fffbf9;
             margin-bottom: 12px;
-            border-radius: 12px;
+            border-radius: 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-left: 4px solid var(--primary-pink);
+            border-left: 5px solid var(--accent-rose);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.01);
         }
 
         .suggested-item {
-            border-left: 4px solid var(--text-muted);
+            border-left: 5px solid #d3c4c2;
         }
 
         .name-info h4 {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: bold;
+            color: var(--text-dark);
         }
 
         .name-info p {
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             color: var(--text-muted);
         }
 
@@ -159,7 +173,7 @@
             background: var(--success-green);
             color: var(--success-text);
             border: none;
-            padding: 6px 12px;
+            padding: 6px 14px;
             border-radius: 20px;
             font-size: 0.8rem;
             cursor: pointer;
@@ -171,15 +185,16 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             padding: 10px 20px;
             border-radius: 30px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 25px rgba(225, 150, 140, 0.15);
             display: flex;
             align-items: center;
             gap: 15px;
             z-index: 1000;
+            border: 1px solid #ffdcd7;
         }
 
         audio {
@@ -190,32 +205,32 @@
         @media (max-width: 768px) {
             .container { grid-template-columns: 1fr; gap: 25px; }
             .header h1 { font-size: 2.1rem; }
-            .photo-wrapper { max-width: 80%; }
+            .mascot-wrapper { font-size: 4rem; }
         }
     </style>
 </head>
 <body>
 
     <div class="audio-player-container">
-        <span>🎵 Calm Melodies:</span>
+        <span>🎵 Play Music:</span>
         <audio id="bg-music" controls loop>
             <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
         </audio>
     </div>
 
     <div class="header">
-        <h1>Help Us Name Our Daughter! 🌸</h1>
-        <p>Our little princess arrived on 24-Mar-2026. Help us choose a beautiful name starting with <strong>'V'</strong> or <strong>'Ve'</strong>!</p>
+        <h1>The Grand Name Hunt! 🌸✨</h1>
+        <p>Our little princess arrived on 24-Mar-2026! Help us pick a gorgeous name starting with <strong>'V'</strong> or <strong>'Ve'</strong>!</p>
     </div>
 
-    <div class="photo-wrapper">
-        <img class="baby-photo" src="baby.jpg" alt="Our Beautiful Daughter">
+    <div class="mascot-wrapper">
+        👶🏻💖✨
     </div>
 
     <div class="container">
         
         <div class="card">
-            <h2>✨ Our Shortlist</h2>
+            <h2>⭐ Our Top Favorites</h2>
             <ul class="name-list" id="shortlist-container">
                 <li class="name-item">
                     <div class="name-info">
@@ -243,10 +258,10 @@
                     <label>Meaning or Your Name (optional)</label>
                     <input type="text" id="inputMeaning" placeholder="e.g., Consciousness / Uncle Ramesh">
                 </div>
-                <button type="submit" class="submit-btn">Submit Suggestion</button>
+                <button type="submit" class="submit-btn">Submit Suggestion 🚀</button>
             </form>
 
-            <h2>📥 Recent Suggestions</h2>
+            <h2>📥 Family Suggestions</h2>
             <ul class="name-list" id="suggestions-container">
                 </ul>
         </div>
@@ -283,7 +298,6 @@
                 suggestEl.innerHTML = "";
 
                 data.forEach(item => {
-                    // Skips blank/deleted cells instantly
                     if (!item.name || item.name.toString().trim() === "") return;
                     if (item.name === 'Vedanshi' || item.name === 'Vrindha') return;
 
