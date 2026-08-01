@@ -18,9 +18,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 15px;
             color: #4a4a4a;
-            overflow: hidden;
+            overflow-x: hidden;
             font-family: 'Poppins', sans-serif;
             transition: background 1s ease;
             position: relative;
@@ -39,10 +39,9 @@
         }
 
         body.loaded .bg-element {
-            opacity: 0.45; /* Softly visible once main card loads */
+            opacity: 0.45;
         }
 
-        /* Staggered positions & float speeds for cute elements */
         .bg-element:nth-child(1) { left: 8%; animation-duration: 7s; animation-delay: 0s; }
         .bg-element:nth-child(2) { left: 22%; animation-duration: 9s; animation-delay: 2s; }
         .bg-element:nth-child(3) { left: 38%; animation-duration: 8s; animation-delay: 4s; }
@@ -51,15 +50,9 @@
         .bg-element:nth-child(6) { left: 90%; animation-duration: 8.5s; animation-delay: 5s; }
 
         @keyframes floatUp {
-            0% {
-                transform: translateY(105vh) rotate(0deg) scale(0.8);
-            }
-            50% {
-                transform: translateY(50vh) rotate(15deg) scale(1.1);
-            }
-            100% {
-                transform: translateY(-10vh) rotate(-15deg) scale(0.8);
-            }
+            0% { transform: translateY(105vh) rotate(0deg) scale(0.8); }
+            50% { transform: translateY(50vh) rotate(15deg) scale(1.1); }
+            100% { transform: translateY(-10vh) rotate(-15deg) scale(0.8); }
         }
 
         /* ---------------- TERMINAL OVERLAY ---------------- */
@@ -74,7 +67,7 @@
             align-items: center;
             justify-content: center;
             z-index: 999;
-            padding: 20px;
+            padding: 15px;
             transition: opacity 0.8s ease, visibility 0.8s ease;
         }
 
@@ -119,6 +112,7 @@
             font-size: 0.95rem;
             line-height: 1.6;
             min-height: 150px;
+            word-break: break-all;
         }
 
         .prompt { color: #7ee787; }
@@ -146,8 +140,8 @@
             background: rgba(255, 255, 255, 0.96);
             border-radius: 24px;
             padding: 35px 25px;
-            max-width: 500px;
-            width: 100%;
+            max-width: 460px; /* Reduced slightly for better mobile proportion */
+            width: 92%;
             text-align: center;
             box-shadow: 0 10px 30px rgba(235, 111, 146, 0.15);
             border: 2px solid #fff;
@@ -176,12 +170,12 @@
 
         h1 {
             color: #d63384;
-            font-size: 1.8rem;
+            font-size: 1.7rem;
             margin-bottom: 10px;
         }
 
         p.subtitle {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: #6c757d;
             margin-bottom: 25px;
             line-height: 1.5;
@@ -192,9 +186,9 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
             margin-bottom: 20px;
-            min-height: 140px;
+            min-height: 120px;
             align-items: center;
             transition: all 0.5s ease;
         }
@@ -202,11 +196,11 @@
         .bubble-tag {
             background: linear-gradient(135deg, #ffffff 0%, #ffe3ec 100%);
             border: 2px solid #ffb6c1;
-            padding: 12px 22px;
+            padding: 10px 18px;
             border-radius: 50px;
             font-weight: 700;
             color: #d63384;
-            font-size: 1rem;
+            font-size: 0.95rem;
             box-shadow: 0 8px 15px rgba(255, 182, 193, 0.4), inset 0 0 8px rgba(255, 255, 255, 0.8);
             animation: float 3s ease-in-out infinite alternate;
             position: relative;
@@ -257,32 +251,35 @@
             100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
         }
 
-        /* Banner Box */
+        /* Banner Box (Starts hidden & positioned down) */
         .reveal-box {
             background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
             color: white;
-            padding: 30px 25px;
+            padding: 25px 20px;
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(255, 117, 140, 0.4);
             margin-bottom: 25px;
-            opacity: 0.4;
-            transform: scale(0.95);
-            transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            display: none;
+            transform: translateY(60px) scale(0.9);
+            transition: opacity 1s ease, transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .reveal-box.grand-center {
+        /* Slow slide-up class triggered after final burst */
+        .reveal-box.slide-up-show {
+            display: block;
             opacity: 1;
-            transform: scale(1.05);
+            transform: translateY(0) scale(1);
             box-shadow: 0 15px 35px rgba(255, 117, 140, 0.6);
         }
 
         .reveal-box h2 {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             margin-bottom: 8px;
         }
 
         .reveal-box p {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             opacity: 0.95;
         }
 
@@ -291,15 +288,55 @@
             text-decoration: none;
             color: #d63384;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             border: 2px solid #ffd1dc;
-            padding: 10px 20px;
+            padding: 10px 18px;
             border-radius: 12px;
             transition: all 0.3s ease;
         }
 
         .back-btn:hover {
             background-color: #ffd1dc;
+        }
+
+        /* ---------------- MOBILE RESPONSIVE TWEAKS ---------------- */
+        @media (max-width: 480px) {
+            .card {
+                padding: 25px 18px;
+                border-radius: 20px;
+            }
+
+            h1 {
+                font-size: 1.45rem;
+            }
+
+            p.subtitle {
+                font-size: 0.85rem;
+                margin-bottom: 20px;
+            }
+
+            .bubble-tag {
+                padding: 8px 14px;
+                font-size: 0.85rem;
+            }
+
+            .bubbles-grid {
+                gap: 8px;
+                min-height: 100px;
+            }
+
+            .reveal-box {
+                padding: 20px 15px;
+            }
+
+            .reveal-box h2 {
+                font-size: 1.15rem;
+            }
+
+            .terminal-body {
+                font-size: 0.8rem;
+                padding: 15px;
+            }
         }
     </style>
 </head>
@@ -431,6 +468,7 @@
 
                 playPopSound(800);
 
+                // Wait for instant re-assembly, then burst all together
                 setTimeout(() => {
                     bubbles.forEach(bubble => {
                         popSingleBubble(bubble);
@@ -438,10 +476,17 @@
 
                     playPopSound(300);
 
+                    // Fade out bubble container and trigger bottom-to-top slide up of banner
                     setTimeout(() => {
                         bubblesContainer.style.display = 'none';
-                        revealBox.classList.add('grand-center');
-                    }, 500);
+                        revealBox.style.display = 'block';
+                        
+                        // Small timeout to allow CSS transition to animate smoothly
+                        setTimeout(() => {
+                            revealBox.classList.add('slide-up-show');
+                        }, 50);
+
+                    }, 400);
 
                 }, 1200);
             }
