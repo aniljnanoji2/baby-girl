@@ -140,7 +140,7 @@
             background: rgba(255, 255, 255, 0.96);
             border-radius: 24px;
             padding: 35px 25px;
-            max-width: 460px; /* Reduced slightly for better mobile proportion */
+            max-width: 460px;
             width: 92%;
             text-align: center;
             box-shadow: 0 10px 30px rgba(235, 111, 146, 0.15);
@@ -251,7 +251,30 @@
             100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
         }
 
-        /* Banner Box (Starts hidden & positioned down) */
+        /* Celebration Petal / Confetti Animation */
+        .confetti-petal {
+            position: fixed;
+            font-size: 1.5rem;
+            pointer-events: none;
+            z-index: 90;
+            animation: burstUp 2s ease-out forwards;
+        }
+
+        @keyframes burstUp {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(0.5);
+                opacity: 1;
+            }
+            70% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translate(var(--cx), var(--cy)) rotate(720deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Banner Box (Starts hidden & positioned down for SLOW SLIDE UP) */
         .reveal-box {
             background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
             color: white;
@@ -261,11 +284,12 @@
             margin-bottom: 25px;
             opacity: 0;
             display: none;
-            transform: translateY(60px) scale(0.9);
-            transition: opacity 1s ease, transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translateY(80px) scale(0.95);
+            /* Slow and smooth transition (2.2 seconds) */
+            transition: opacity 2.2s ease, transform 2.2s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* Slow slide-up class triggered after final burst */
+        /* Slow slide-up active state */
         .reveal-box.slide-up-show {
             display: block;
             opacity: 1;
@@ -468,7 +492,7 @@
 
                 playPopSound(800);
 
-                // Wait for instant re-assembly, then burst all together
+                // Wait for re-assembly, then burst all together
                 setTimeout(() => {
                     bubbles.forEach(bubble => {
                         popSingleBubble(bubble);
@@ -476,12 +500,14 @@
 
                     playPopSound(300);
 
-                    // Fade out bubble container and trigger bottom-to-top slide up of banner
+                    // Trigger 2-second celebration petals + slow slide up banner
                     setTimeout(() => {
                         bubblesContainer.style.display = 'none';
                         revealBox.style.display = 'block';
                         
-                        // Small timeout to allow CSS transition to animate smoothly
+                        // Launch 2-second flower celebration
+                        triggerFlowerCelebration();
+
                         setTimeout(() => {
                             revealBox.classList.add('slide-up-show');
                         }, 50);
@@ -530,6 +556,39 @@
             setTimeout(() => {
                 particle.remove();
             }, 600);
+        }
+
+        // --- 2-SECOND FLOWER CELEBRATION BLAST ---
+        function triggerFlowerCelebration() {
+            const flowers = ['🌸', '🌺', '🌷', '✨', '💖', '🌼', '🎉'];
+            const totalItems = 35;
+
+            for (let i = 0; i < totalItems; i++) {
+                setTimeout(() => {
+                    const petal = document.createElement('div');
+                    petal.classList.add('confetti-petal');
+                    petal.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+
+                    // Start around bottom center/spread
+                    const startX = window.innerWidth / 2 + (Math.random() - 0.5) * 200;
+                    const startY = window.innerHeight - 50;
+
+                    petal.style.left = `${startX}px`;
+                    petal.style.top = `${startY}px`;
+
+                    // Direction to fly outward and upward
+                    const cx = (Math.random() - 0.5) * window.innerWidth * 0.8 + 'px';
+                    const cy = -(200 + Math.random() * (window.innerHeight * 0.7)) + 'px';
+
+                    petal.style.setProperty('--cx', cx);
+                    petal.style.setProperty('--cy', cy);
+
+                    document.body.appendChild(petal);
+
+                    // Auto remove after 2 seconds
+                    setTimeout(() => petal.remove(), 2000);
+                }, i * 45); // Spread creation across ~1.5s for a rich 2-second burst
+            }
         }
 
         function playPopSound(freq = 500) {
