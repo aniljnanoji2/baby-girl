@@ -3,28 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Little Angel's Memory Thread 💕</title>
+    <title>ನಮ್ಮ ಮನೆಯ ಸರಸ್ವತಿ/ಮಹಾಲಕ್ಷ್ಮಿ 💕</title>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@600;800;900&family=Noto+Sans+Kannada:wght@700&display=swap" rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        /* Ensure main container wraps everything neatly on all screens */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 10px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
 
-        body {
-            background: #0f061b;
-            color: #ffffff;
-            font-family: 'Poppins', 'Noto Sans Kannada', sans-serif;
-            height: 100vh;
-            width: 100vw;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 25px 40px 20px 40px;
-            overflow: hidden;
-            position: relative;
-        }
+/* Fix for Nickname bar on TV / High-Res Screens */
+.nickname-container, .nicknames-bar {
+    position: relative;
+    margin-top: auto;
+    margin-bottom: 15px;
+    z-index: 999;
+    max-width: 90vw;
+}
 
         /* Ambient Glow Background */
         .glow-bg {
