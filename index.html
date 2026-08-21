@@ -554,7 +554,7 @@
         <!-- TOP RIGHT CORNER WIDGET -->
         <div class="name-reveal-widget" id="revealWidget">
             <div id="lockedWidget" style="display: flex; align-items: center; gap: 15px;">
-                <span class="countdown-text">🔒 Reveals at 1:00 PM IST</span>
+                <span class="countdown-text" id="countdownLabel">🔒 Reveals at 1:00 PM IST</span>
                 <button class="manual-reveal-btn" id="manualRevealBtn">👑 Reveal Now</button>
             </div>
             <div class="revealed-name-badge" id="nameBadge">
@@ -632,8 +632,11 @@
         const GITHUB_USER = 'aniljnanoji2';
         const GITHUB_REPO = 'baby-girl';
 
-        // SET YOUR EXACT TARGET DATE & TIME HERE (ISO string with +05:30 offset for IST)
-        const TARGET_REVEAL_DATE = new Date('2026-08-23T13:00:00+05:30');
+        // SET YOUR EXACT TARGET DATE & TIME HERE
+        // Note: Months in Date.UTC are 0-indexed (0 = Jan, 6 = Jul, 7 = Aug, etc.)
+        // 1:00 PM IST (UTC+5:30) is equivalent to 07:30 UTC
+        // Format: Date.UTC(YEAR, MONTH_INDEX, DAY, UTC_HOURS, UTC_MINUTES, UTC_SECONDS)
+        const TARGET_REVEAL_DATE = new Date(Date.UTC(2026, 7, 23, 7, 30, 0));
 
         const fallbackList = [
             "https://images.unsplash.com/photo-1519689680058-324335c77eba?w=600",
@@ -792,6 +795,27 @@
             const now = new Date();
             if (now >= TARGET_REVEAL_DATE) {
                 window.revealNameNow();
+            } else {
+                // Real-time ticking countdown
+                const diff = TARGET_REVEAL_DATE - now;
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+                const label = document.getElementById('countdownLabel');
+                const lockMsg = document.getElementById('nicknameLockMsg');
+
+                let timeStr = "";
+                if (hours >= 24) {
+                    const days = Math.floor(hours / 24);
+                    const remainingHours = hours % 24;
+                    timeStr = `${days}d ${remainingHours}h`;
+                } else {
+                    timeStr = `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+                }
+
+                if (label) label.textContent = `🔒 Reveals in ${timeStr}`;
+                if (lockMsg) lockMsg.textContent = `🔒 Unlocks in ${timeStr}`;
             }
         }
 
@@ -829,7 +853,7 @@
             initFlyingPhotos();
             initSlideshow();
             checkTargetTime();
-            setInterval(checkTargetTime, 5000);
+            setInterval(checkTargetTime, 1000); // Check and update countdown every second
 
             const startOverlay = document.getElementById('startOverlay');
             if (startOverlay) {
