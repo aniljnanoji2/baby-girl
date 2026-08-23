@@ -144,6 +144,34 @@
             letter-spacing: 1px;
         }
 
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .mute-btn {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            color: #ffffff;
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .mute-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.05);
+        }
+
         .name-reveal-widget {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(16px);
@@ -498,7 +526,7 @@
             100% { transform: scale(1.08); }
         }
 
-        /* MOBILE RESPONSIBENESS (Mobile Phones & Tablets) */
+        /* MOBILE RESPONSIVENESS */
         @media (max-width: 768px) {
             body {
                 padding: 12px 8px;
@@ -508,6 +536,12 @@
                 flex-direction: column;
                 gap: 12px;
                 text-align: center;
+            }
+
+            .header-controls {
+                flex-direction: column;
+                width: 100%;
+                gap: 10px;
             }
 
             .header-title h1 {
@@ -545,7 +579,7 @@
             }
 
             .twine-line {
-                display: none; /* Hide top string on small screen grid view */
+                display: none;
             }
 
             .polaroid-grid {
@@ -624,7 +658,7 @@
             }
 
             .flying-photo-layer {
-                display: none; /* Disable background floating photos on phone for cleaner look */
+                display: none;
             }
         }
 
@@ -677,13 +711,17 @@
             <h1> ನಮ್ಮ ಮನೆಯ ಸರಸ್ವತಿ</h1>
         </div>
 
-        <div class="name-reveal-widget" id="revealWidget">
-            <div id="lockedWidget" style="display: flex; align-items: center; gap: 15px;">
-                <span class="countdown-text" id="countdownLabel">🔒 Reveals at 1:00 PM IST</span>
-                <button class="manual-reveal-btn" id="manualRevealBtn">👑 Reveal Now</button>
-            </div>
-            <div class="revealed-name-badge" id="nameBadge">
-                👑 VEDANSHI <span class="kannada-inline">(ವೇದಾಂಶಿ)</span>
+        <div class="header-controls">
+            <button class="mute-btn" id="muteToggleBtn">🔊 Mute</button>
+
+            <div class="name-reveal-widget" id="revealWidget">
+                <div id="lockedWidget" style="display: flex; align-items: center; gap: 15px;">
+                    <span class="countdown-text" id="countdownLabel">🔒 Reveals at 1:00 PM IST</span>
+                    <button class="manual-reveal-btn" id="manualRevealBtn">👑 Reveal Now</button>
+                </div>
+                <div class="revealed-name-badge" id="nameBadge">
+                    👑 VEDANSHI <span class="kannada-inline">(ವೇದಾಂಶಿ)</span>
+                </div>
             </div>
         </div>
     </div>
@@ -726,7 +764,7 @@
         <div class="nickname-tags-wrapper">
             <div class="nickname-lock-msg" id="nicknameLockMsg">🔒 Unlocks at 1:00 PM IST</div>
             <div class="nickname-tags locked" id="nicknameTags">
-                <span class="nickname-pill">Vedu 💖</span>
+                <span class="nickname-pill">Vedu 😂</span>
                 <span class="nickname-pill">Veda ✨</span>
                 <span class="nickname-pill">Vedamma 💖</span>
                 <span class="nickname-pill">Gundi 🤪</span>
@@ -741,7 +779,7 @@
             <div class="grand-title">✨ Welcome Little Princess ✨</div>
             <div class="grand-name">VEDANSHI</div>
             <div class="grand-kannada-name">ವೇದಾಂಶಿ</div>
-            <button class="dismiss-btn" id="dismissModalBtn">Back to Memories 🌸</button>
+            <button class="dismiss-btn" id="dismissModalBtn">View Photos 🌸</button>
         </div>
     </div>
 
@@ -766,6 +804,7 @@
         let mediaIndex = 0;
         let isRevealed = false;
         let wakeLock = null;
+        let isMuted = false;
 
         async function enableScreenWakeLock() {
             try {
@@ -840,6 +879,21 @@
             }
 
             enableScreenWakeLock();
+        };
+
+        window.toggleMute = function() {
+            const music = document.getElementById('bgMusic');
+            const muteBtn = document.getElementById('muteToggleBtn');
+            if (!music || !muteBtn) return;
+
+            isMuted = !isMuted;
+            music.muted = isMuted;
+
+            if (isMuted) {
+                muteBtn.textContent = '🔇 Unmute';
+            } else {
+                muteBtn.textContent = '🔊 Mute';
+            }
         };
 
         window.revealNameNow = function() {
@@ -991,6 +1045,14 @@
             const startOverlay = document.getElementById('startOverlay');
             if (startOverlay) {
                 startOverlay.addEventListener('click', window.startTVDisplay);
+            }
+
+            const muteBtn = document.getElementById('muteToggleBtn');
+            if (muteBtn) {
+                muteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    window.toggleMute();
+                });
             }
 
             const manualBtn = document.getElementById('manualRevealBtn');
