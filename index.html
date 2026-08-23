@@ -1,573 +1,964 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Baby Girl Name Reveal & Countdown</title>
-  <style>
-    /* Modern Reset & Base Styling */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #f48fb1 100%);
-      color: #4a148c;
-      min-height: 100vh;
-      overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      position: relative;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Little Princess 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@600;800;900&family=Noto+Sans+Kannada:wght@700&display=swap" rel="stylesheet">
 
-    /* Start / TV Display Overlay */
-    #startOverlay {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(255, 240, 245, 0.96);
-      z-index: 10000;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      cursor: pointer;
-    }
-    #startOverlay h1 { font-size: 2.5rem; margin-bottom: 1rem; color: #ad1457; }
-    #startOverlay p { font-size: 1.2rem; color: #880e4f; }
+    <style>
+        body {
+            background: radial-gradient(circle at center, #36173d 0%, #1a0a1f 60%, #0d0410 100%) !important;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 10px;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
 
-    /* Animated Background Emojis */
-    .emoji-bg {
-      position: absolute;
-      bottom: -50px;
-      font-size: 2rem;
-      pointer-events: none;
-      animation: floatUp 12s linear infinite;
-      opacity: 0.7;
-      z-index: 1;
-    }
-    @keyframes floatUp {
-      0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
-      100% { transform: translateY(-115vh) rotate(360deg); opacity: 0; }
-    }
+        .nickname-container, .nicknames-bar {
+            position: relative;
+            margin-top: auto;
+            margin-bottom: 15px;
+            z-index: 999;
+            max-width: 90vw;
+        }
 
-    /* Main Container */
-    .main-container {
-      width: 100%;
-      max-width: 900px;
-      padding: 20px;
-      text-align: center;
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+        .glow-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: 
+                radial-gradient(circle at 15% 20%, rgba(255, 117, 140, 0.22) 0%, transparent 45%),
+                radial-gradient(circle at 85% 80%, rgba(186, 85, 211, 0.22) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.08) 0%, transparent 60%);
+            z-index: 0;
+            pointer-events: none;
+        }
 
-    header h1 {
-      font-size: 2.8rem;
-      color: #880e4f;
-      text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
-      margin-bottom: 10px;
-    }
+        .floating-emoji-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
 
-    /* Twine String & Hanging Polaroids */
-    .string-container {
-      position: relative;
-      width: 100%;
-      margin: 30px 0 20px;
-    }
-    .twine-string {
-      width: 100%;
-      height: 4px;
-      background: #8d6e63;
-      border-radius: 2px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-    .polaroid-grid {
-      display: flex;
-      justify-content: space-around;
-      align-items: flex-start;
-      margin-top: -10px;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-    .polaroid-card {
-      background: #fff;
-      padding: 10px 10px 25px 10px;
-      box-shadow: 0 8px 15px rgba(0,0,0,0.15);
-      border-radius: 4px;
-      width: 180px;
-      transform: rotate(-3deg);
-      transition: transform 0.3s ease, opacity 0.5s ease;
-      position: relative;
-    }
-    .polaroid-card:nth-child(even) {
-      transform: rotate(4deg);
-    }
-    .polaroid-card:hover {
-      transform: scale(1.05) rotate(0deg);
-      z-index: 20;
-    }
-    .polaroid-pin {
-      width: 12px;
-      height: 12px;
-      background: #e91e63;
-      border-radius: 50%;
-      position: absolute;
-      top: -6px;
-      left: 50%;
-      transform: translateX(-50%);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    }
-    .polaroid-media {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      background: #f5f5f5;
-      border-radius: 2px;
-    }
+        .float-emoji {
+            position: absolute;
+            bottom: -60px;
+            opacity: 0.45;
+            filter: drop-shadow(0 0 12px rgba(255, 182, 193, 0.6));
+            animation: floatUp 16s infinite linear;
+        }
 
-    /* Floating Picture Frames Across Screen */
-    .fly-box {
-      position: fixed;
-      width: 120px;
-      height: 140px;
-      background: white;
-      padding: 6px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      border-radius: 6px;
-      z-index: 5;
-      pointer-events: none;
-      transition: transform 0.1s linear;
-    }
-    .fly-box img, .fly-box video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+        .e1 { left: 6%;  font-size: 2.2rem; animation-duration: 18s; animation-delay: 0s; }
+        .e2 { left: 18%; font-size: 2.8rem; animation-duration: 22s; animation-delay: 4s; }
+        .e3 { left: 32%; font-size: 2.0rem; animation-duration: 16s; animation-delay: 8s; }
+        .e4 { left: 45%; font-size: 2.6rem; animation-duration: 20s; animation-delay: 2s; }
+        .e5 { left: 60%; font-size: 2.3rem; animation-duration: 17s; animation-delay: 10s; }
+        .e6 { left: 74%; font-size: 2.9rem; animation-duration: 24s; animation-delay: 5s; }
+        .e7 { left: 88%; font-size: 2.1rem; animation-duration: 19s; animation-delay: 1s; }
+        .e8 { left: 95%; font-size: 2.5rem; animation-duration: 21s; animation-delay: 7s; }
 
-    /* Countdown Display Box */
-    .countdown-box {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(8px);
-      padding: 20px 30px;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(136, 14, 79, 0.15);
-      margin: 20px 0;
-      display: inline-block;
-    }
-    .timer {
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-    }
-    .time-unit {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-width: 60px;
-    }
-    .time-unit span:first-child {
-      font-size: 2.2rem;
-      font-weight: bold;
-      color: #ad1457;
-    }
-    .time-unit span:last-child {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      color: #880e4f;
-      letter-spacing: 1px;
-    }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            15% { opacity: 0.55; }
+            50% { transform: translateY(-55vh) translateX(25px) rotate(180deg) scale(1.1); }
+            85% { opacity: 0.55; }
+            100% {
+                transform: translateY(-115vh) translateX(-20px) rotate(360deg) scale(0.9);
+                opacity: 0;
+            }
+        }
 
-    /* Action Button */
-    .btn {
-      background: linear-gradient(45deg, #ec407a, #d81b60);
-      color: white;
-      border: none;
-      padding: 12px 28px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      border-radius: 30px;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(216, 27, 96, 0.4);
-      transition: all 0.3s ease;
-      margin-top: 15px;
-    }
-    .btn:hover {
-      transform: translateY(-2deg);
-      box-shadow: 0 6px 20px rgba(216, 27, 96, 0.6);
-    }
+        .floating-photo-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+            overflow: hidden;
+        }
 
-    /* Nicknames Footer Container */
-    .nickname-footer {
-      position: relative;
-      margin-top: auto;
-      margin-bottom: 20px;
-      z-index: 999;
-      max-width: 90vw;
-      text-align: center;
-      background: rgba(255, 255, 255, 0.6);
-      padding: 10px 20px;
-      border-radius: 15px;
-    }
-    .nickname-tag {
-      display: inline-block;
-      background: #f8bbd0;
-      color: #880e4f;
-      padding: 5px 12px;
-      border-radius: 12px;
-      margin: 4px;
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
+        .fly-card {
+            position: absolute;
+            background: #ffffff;
+            padding: 8px 8px 16px 8px;
+            border-radius: 4px;
+            width: 135px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            opacity: 0.3;
+            filter: blur(0.5px);
+        }
 
-    /* Name Reveal Popup Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
-      z-index: 20000;
-      justify-content: center;
-      align-items: center;
-    }
-    .modal-content {
-      background: #fff;
-      padding: 40px;
-      border-radius: 20px;
-      text-align: center;
-      max-width: 500px;
-      width: 90%;
-      animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      position: relative;
-    }
-    @keyframes popIn {
-      0% { transform: scale(0.5); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    .baby-name {
-      font-size: 3rem;
-      color: #ad1457;
-      margin: 20px 0;
-      font-family: 'Georgia', serif;
-      letter-spacing: 2px;
-    }
+        .fly-card img, .fly-card video {
+            width: 100%;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
 
-    /* Celebration Shower Items */
-    .celebration-item {
-      position: fixed;
-      top: -50px;
-      font-size: 2.5rem;
-      z-index: 15000;
-      pointer-events: none;
-      animation: fallDown 4s linear forwards;
-    }
-    @keyframes fallDown {
-      to { transform: translateY(105vh) rotate(720deg); opacity: 0; }
-    }
-  </style>
+        .fly-1 { top: 12%; left: -150px; animation: floatRight 24s infinite linear; }
+        .fly-2 { top: 55%; right: -150px; animation: floatLeft 28s infinite linear 4s; }
+        .fly-3 { bottom: 18%; left: -150px; animation: floatRightSlow 32s infinite linear 10s; }
+
+        @keyframes floatRight {
+            0% { transform: translateX(0) translateY(0) rotate(0deg); }
+            50% { transform: translateX(55vw) translateY(-40px) rotate(15deg); }
+            100% { transform: translateX(115vw) translateY(20px) rotate(30deg); }
+        }
+
+        @keyframes floatLeft {
+            0% { transform: translateX(0) translateY(0) rotate(0deg); }
+            50% { transform: translateX(-55vw) translateY(50px) rotate(-20deg); }
+            100% { transform: translateX(-115vw) translateY(-30px) rotate(-35deg); }
+        }
+
+        @keyframes floatRightSlow {
+            0% { transform: translateX(0) translateY(0) rotate(-10deg); }
+            50% { transform: translateX(60vw) translateY(-60px) rotate(10deg); }
+            100% { transform: translateX(120vw) translateY(-10px) rotate(25deg); }
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .header-title h1 {
+            font-family: 'Caveat', cursive;
+            font-size: 3.4rem;
+            color: #ffb6c1;
+            text-shadow: 0 0 20px rgba(255, 182, 193, 0.6);
+            letter-spacing: 1px;
+        }
+
+        .name-reveal-widget {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            padding: 10px 22px;
+            border-radius: 40px;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .countdown-text {
+            font-size: 0.95rem;
+            color: #ffd700;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .manual-reveal-btn {
+            background: linear-gradient(135deg, #ff477e, #ff758c);
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(255, 71, 126, 0.4);
+        }
+
+        .manual-reveal-btn:hover {
+            transform: scale(1.05);
+            background: #ff758c;
+        }
+
+        .revealed-name-badge {
+            display: none;
+            font-size: 2.1rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #ffffff 0%, #ffd1dc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 117, 140, 0.8);
+            padding: 0 8px;
+        }
+
+        .kannada-inline {
+            font-family: 'Noto Sans Kannada', sans-serif;
+            font-size: 1.6rem;
+            color: #ffb6c1;
+            margin-left: 6px;
+            font-weight: 700;
+        }
+
+        .main-hero-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            width: 100%;
+        }
+
+        .thread-container {
+            width: 100%;
+            max-width: 1350px;
+            position: relative;
+            height: 390px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .twine-line {
+            position: absolute;
+            top: 25px;
+            left: 2%;
+            width: 96%;
+            height: 30px;
+            border-bottom: 4px solid #d4a373;
+            border-radius: 50% / 22px;
+        }
+
+        .polaroid-grid {
+            display: flex;
+            justify-content: center;
+            gap: 36px;
+            width: 100%;
+            padding-top: 15px;
+        }
+
+        .polaroid-card {
+            background: #ffffff;
+            padding: 12px 12px 18px 12px;
+            border-radius: 6px;
+            width: 250px;
+            height: 330px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            position: relative;
+            transform-origin: top center;
+            transition: opacity 1s ease, transform 1s ease;
+            opacity: 1;
+        }
+
+        .polaroid-card.fade-out {
+            opacity: 0;
+            transform: scale(0.9) translateY(20px);
+        }
+
+        .polaroid-card:nth-child(1) { transform: rotate(-3.5deg); }
+        .polaroid-card:nth-child(2) { transform: rotate(2.5deg); }
+        .polaroid-card:nth-child(3) { transform: rotate(-2deg); }
+        .polaroid-card:nth-child(4) { transform: rotate(4deg); }
+
+        .clothespin {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 18px;
+            height: 36px;
+            background: #e0a96d;
+            border: 1px solid #8c5a2b;
+            border-radius: 3px;
+            z-index: 5;
+        }
+
+        .photo-box {
+            width: 100%;
+            height: 235px;
+            background: #111;
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .photo-box img, .photo-box video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .polaroid-caption {
+            font-family: 'Caveat', cursive;
+            color: #222;
+            font-size: 1.65rem;
+            text-align: center;
+            margin-top: 6px;
+            font-weight: 700;
+        }
+
+        .nickname-footer {
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(14px);
+            padding: 8px 24px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            max-width: 92%;
+            margin: 0 auto;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+            position: relative;
+        }
+
+        .nickname-title {
+            font-family: 'Caveat', cursive;
+            font-size: 1.9rem;
+            color: #ffd700;
+            white-space: nowrap;
+            letter-spacing: 0.5px;
+        }
+
+        .nickname-tags-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .nickname-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            transition: filter 0.8s ease, opacity 0.8s ease;
+        }
+
+        .nickname-tags.locked {
+            filter: blur(8px);
+            opacity: 0.25;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .nickname-lock-msg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ffd700;
+            font-weight: 700;
+            font-size: 1.05rem;
+            white-space: nowrap;
+            z-index: 5;
+            background: rgba(15, 6, 27, 0.85);
+            padding: 4px 18px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+        }
+
+        .nickname-pill {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #ffffff;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nickname-pill:hover {
+            transform: scale(1.08);
+            background: rgba(255, 117, 140, 0.35);
+            border-color: #ff758c;
+        }
+
+        .reveal-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(10, 5, 20, 0.88);
+            backdrop-filter: blur(14px);
+            z-index: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease;
+        }
+
+        .reveal-modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .celebration-card {
+            text-align: center;
+            transform: scale(0.7);
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .reveal-modal-overlay.active .celebration-card {
+            transform: scale(1);
+        }
+
+        .grand-title {
+            font-family: 'Caveat', cursive;
+            font-size: 3rem;
+            color: #ffb6c1;
+            margin-bottom: 5px;
+        }
+
+        .grand-name {
+            font-size: 6.2rem;
+            font-weight: 900;
+            letter-spacing: 14px;
+            background: linear-gradient(135deg, #ffffff 0%, #ffd1dc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 50px rgba(255, 117, 140, 0.9);
+            margin-bottom: 0px;
+        }
+
+        .grand-kannada-name {
+            font-family: 'Noto Sans Kannada', sans-serif;
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: #ffb6c1;
+            text-shadow: 0 0 30px rgba(255, 182, 193, 0.9);
+            margin-bottom: 25px;
+        }
+
+        .dismiss-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border: 2px solid #fff;
+            padding: 10px 32px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .dismiss-btn:hover { background: #fff; color: #ff477e; }
+
+        .start-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(10, 5, 20, 0.96);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #ff477e, #ff758c);
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 800;
+            padding: 20px 50px;
+            border-radius: 60px;
+            border: 3px solid #fff;
+            box-shadow: 0 0 30px rgba(255, 71, 126, 0.8);
+            margin-top: 25px;
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.08); }
+        }
+
+        .screensaver-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #0d0410;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease;
+        }
+
+        .screensaver-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .screensaver-content {
+            width: 85vw;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .screensaver-media {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 0 60px rgba(255, 117, 140, 0.4);
+            animation: ssZoomIn 1s ease-in-out;
+        }
+
+        .screensaver-hint {
+            position: absolute;
+            bottom: 25px;
+            color: rgba(255, 215, 0, 0.7);
+            font-size: 1.1rem;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(0,0,0,0.8);
+        }
+
+        @keyframes ssZoomIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- TV / Mobile Start Overlay -->
-  <div id="startOverlay" onclick="startTVDisplay()">
-    <h1>🎀 Welcome to Our Baby Girl's Portal 🎀</h1>
-    <p>Click anywhere or press OK on TV Remote to start</p>
-  </div>
+    <div class="glow-bg"></div>
 
-  <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lullaby-112260.mp3"></audio>
-
-  <!-- Flying Photo Frames -->
-  <div id="flyBox1" class="fly-box"></div>
-  <div id="flyBox2" class="fly-box"></div>
-  <div id="flyBox3" class="fly-box"></div>
-
-  <div class="main-container">
-    <header>
-      <h1>✨ Our Princess Arrival ✨</h1>
-      <p>Counting down to the grand name reveal!</p>
-    </header>
-
-    <!-- Hanging Twine & Polaroids -->
-    <div class="string-container">
-      <div class="twine-string"></div>
-      <div class="polaroid-grid" id="polaroidGrid">
-        <!-- 4 Polaroid cards rendered via JS -->
-      </div>
+    <div class="floating-emoji-layer">
+        <div class="float-emoji e1">💖</div>
+        <div class="float-emoji e2">👶</div>
+        <div class="float-emoji e3">✨</div>
+        <div class="float-emoji e4">🍼</div>
+        <div class="float-emoji e5">🧸</div>
+        <div class="float-emoji e6">🌸</div>
+        <div class="float-emoji e7">🐣</div>
+        <div class="float-emoji e8">💖</div>
     </div>
 
-    <!-- Countdown Timer -->
-    <div class="countdown-box">
-      <div class="timer">
-        <div class="time-unit"><span id="days">00</span><span>Days</span></div>
-        <div class="time-unit"><span id="hours">00</span><span>Hours</span></div>
-        <div class="time-unit"><span id="minutes">00</span><span>Mins</span></div>
-        <div class="time-unit"><span id="seconds">00</span><span>Secs</span></div>
-      </div>
-      <button id="manualRevealBtn" class="btn" onclick="revealNameNow()">Reveal Name Now 🎁</button>
+    <div class="floating-photo-layer">
+        <div class="fly-card fly-1" id="flyBox1"></div>
+        <div class="fly-card fly-2" id="flyBox2"></div>
+        <div class="fly-card fly-3" id="flyBox3"></div>
     </div>
-  </div>
 
-  <!-- Nicknames Footer -->
-  <div class="nickname-footer">
-    <p style="font-weight: bold; margin-bottom: 5px;">Little Angel's Nicknames:</p>
-    <div id="nicknameList">
-      <span class="nickname-tag">🔒 Locked until reveal</span>
+    <div class="start-overlay" id="startOverlay">
+        <h1>✨ Welcome to the Celebration ✨</h1>
+        <p style="color: #ccc; margin-top: 10px;">Press OK on TV Remote / Tap to Launch</p>
+        <button class="start-btn">▶ START SHOW</button>
     </div>
-  </div>
 
-  <!-- Reveal Modal -->
-  <div id="revealModal" class="modal">
-    <div class="modal-content">
-      <h2>🎉 Welcome to the World! 🎉</h2>
-      <p>Our precious little baby girl's name is:</p>
-      <div class="baby-name" id="babyNameText">Ananya</div>
-      <p id="revealMeaning">"Incomparable & Unlimited" ✨</p>
-      <button class="btn" onclick="closeModal()" style="margin-top: 20px;">Close ❤️</button>
+    <div class="top-bar">
+        <div class="header-title">
+            <h1> ನಮ್ಮ ಮನೆಯ ಸರಸ್ವತಿ</h1>
+        </div>
+
+        <div class="name-reveal-widget" id="revealWidget">
+            <div id="lockedWidget" style="display: flex; align-items: center; gap: 15px;">
+                <span class="countdown-text" id="countdownLabel">🔒 Reveals at 1:00 PM IST</span>
+                <button class="manual-reveal-btn" id="manualRevealBtn">👑 Reveal Now</button>
+            </div>
+            <!-- REVEALED BADGE -->
+            <div class="revealed-name-badge" id="nameBadge">
+                👑 VEDANSHI <span class="kannada-inline">(ವೇದಾಂಶಿ)</span>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <script>
-    // Target Reveal Date: August 23, 2026 at 07:30 UTC (1:00 PM IST)
-    const TARGET_TIME = Date.UTC(2026, 7, 23, 7, 30, 0);
+    <div class="main-hero-section">
+        <div class="thread-container">
+            <div class="twine-line"></div>
+            <div class="polaroid-grid">
 
-    // Unsplash Fallback Media
-    const FALLBACK_MEDIA = [
-      { type: 'image', url: 'https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=400&q=80' },
-      { type: 'image', url: 'https://images.unsplash.com/photo-1555252333-9f8e92e65df9?auto=format&fit=crop&w=400&q=80' },
-      { type: 'image', url: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=400&q=80' },
-      { type: 'image', url: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=400&q=80' },
-      { type: 'image', url: 'https://images.unsplash.com/photo-1544126592-807ade215a0b?auto=format&fit=crop&w=400&q=80' }
-    ];
+                <div class="polaroid-card" id="card-0">
+                    <div class="clothespin"></div>
+                    <div class="photo-box"></div>
+                    <div class="polaroid-caption" id="cap-0">Memory #1</div>
+                </div>
 
-    let mediaList = [];
-    let isRevealed = false;
+                <div class="polaroid-card" id="card-1">
+                    <div class="clothespin"></div>
+                    <div class="photo-box"></div>
+                    <div class="polaroid-caption" id="cap-1">Memory #2</div>
+                </div>
 
-    // Nicknames list
-    const NICKNAMES = ["Chiku 🍒", "Gundamma 🧸", "Princess 👑", "Angel 👼", "Doll 🎀"];
+                <div class="polaroid-card" id="card-2">
+                    <div class="clothespin"></div>
+                    <div class="photo-box"></div>
+                    <div class="polaroid-caption" id="cap-2">Memory #3</div>
+                </div>
 
-    // Start TV Display & Audio
-    function startTVDisplay() {
-      document.getElementById('startOverlay').style.display = 'none';
-      const music = document.getElementById('bgMusic');
-      music.play().catch(e => console.log('Audio playback prevented:', e));
+                <div class="polaroid-card" id="card-3">
+                    <div class="clothespin"></div>
+                    <div class="photo-box"></div>
+                    <div class="polaroid-caption" id="cap-3">Memory #4</div>
+                </div>
 
-      // Attempt full screen mode
-      if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen().catch(() => {});
-      }
-    }
+            </div>
+        </div>
+    </div>
 
-    // Keydown support for TV Remote OK button (Enter / Space)
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        const overlay = document.getElementById('startOverlay');
-        if (overlay && overlay.style.display !== 'none') {
-          startTVDisplay();
+    <div class="nickname-footer">
+        <span class="nickname-title">Cute Nicknames 😜:</span>
+        <div class="nickname-tags-wrapper">
+            <div class="nickname-lock-msg" id="nicknameLockMsg">🔒 Unlocks at 1:00 PM IST</div>
+            <div class="nickname-tags locked" id="nicknameTags">
+                <span class="nickname-pill">Vedu 😂</span>
+                <span class="nickname-pill">Veda ✨</span>
+                <span class="nickname-pill">Vedamma 💖</span>
+                <span class="nickname-pill">Gundi 🤪</span>
+                <span class="nickname-pill">Gundamma 🤭</span>
+                <span class="nickname-pill">Potti 😜</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- GRAND CELEBRATION MODAL -->
+    <div class="reveal-modal-overlay" id="celebrationModal">
+        <div class="celebration-card">
+            <div class="grand-title">✨ Welcome Little Princess ✨</div>
+            <div class="grand-name">VEDANSHI</div>
+            <div class="grand-kannada-name">ವೇದಾಂಶಿ</div>
+            <button class="dismiss-btn" id="dismissModalBtn">Back to Memories 🌸</button>
+        </div>
+    </div>
+
+    <div class="screensaver-overlay" id="screensaverOverlay">
+        <div class="screensaver-content" id="ssContent"></div>
+        <div class="screensaver-hint">✨ Move remote, touch screen, or press any key to exit screensaver ✨</div>
+    </div>
+
+    <audio id="bgMusic" loop preload="auto">
+        <source src="music/Luke-Bergs-Bliss(chosic.com).mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const GITHUB_USER = 'aniljnanoji2';
+        const GITHUB_REPO = 'baby-girl';
+
+        const TARGET_REVEAL_DATE = new Date(Date.UTC(2026, 7, 23, 7, 30, 0));
+
+        const fallbackList = [
+            "https://images.unsplash.com/photo-1519689680058-324335c77eba?w=600",
+            "https://images.unsplash.com/photo-1555252333-9f8e92e65df9?w=600",
+            "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600",
+            "https://images.unsplash.com/photo-1544126592-807ade215a0b?w=600"
+        ];
+
+        let activeMedia = [...fallbackList];
+        let mediaIndex = 0;
+        let isRevealed = false;
+
+        function isVideoFile(url) {
+            return /\.(mp4|webm|mov)$/i.test(url);
         }
-      }
-    });
 
-    // GitHub Media Fetch
-    async function loadGitHubMedia() {
-      try {
-        const response = await fetch('https://api.github.com/repos/aniljnanoji2/baby-girl/contents/');
-        if (!response.ok) throw new Error('Repository fetch failed');
-        const data = await response.json();
+        async function loadGitHubMedia() {
+            try {
+                const [imgRes, vidRes] = await Promise.all([
+                    fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/images`),
+                    fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/videos`)
+                ]);
 
-        const validExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.mp4', '.webm', '.mov'];
-        const files = data.filter(file => {
-          if (file.type !== 'file') return false;
-          const ext = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
-          return validExtensions.includes(ext);
+                let items = [];
+
+                if (imgRes.ok) {
+                    const images = await imgRes.json();
+                    if (Array.isArray(images)) {
+                        images.forEach(f => {
+                            if (f.type === 'file' && !f.name.startsWith('.') && /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name)) {
+                                items.push(f.download_url || `images/${f.name}`);
+                            }
+                        });
+                    }
+                }
+
+                if (vidRes.ok) {
+                    const videos = await vidRes.json();
+                    if (Array.isArray(videos)) {
+                        videos.forEach(f => {
+                            if (f.type === 'file' && !f.name.startsWith('.') && /\.(mp4|webm|mov)$/i.test(f.name)) {
+                                items.push(f.download_url || `videos/${f.name}`);
+                            }
+                        });
+                    }
+                }
+
+                if (items.length > 0) {
+                    activeMedia = items;
+                }
+            } catch (err) {
+                console.warn("Could not fetch GitHub directory dynamically, falling back to defaults.", err);
+            }
+        }
+
+        window.startTVDisplay = function() {
+            const overlay = document.getElementById('startOverlay');
+            if (overlay) overlay.style.display = 'none';
+
+            const music = document.getElementById('bgMusic');
+            if (music) {
+                music.play().catch(e => console.log("Audio play deferred:", e));
+            }
+
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen().catch(() => {});
+            }
+            
+            resetIdleTimer();
+        };
+
+        window.revealNameNow = function() {
+            if (isRevealed) return;
+            isRevealed = true;
+
+            const lockedWidget = document.getElementById('lockedWidget');
+            const nameBadge = document.getElementById('nameBadge');
+            const celebrationModal = document.getElementById('celebrationModal');
+
+            if (lockedWidget) lockedWidget.style.display = 'none';
+            if (nameBadge) nameBadge.style.display = 'block';
+            if (celebrationModal) celebrationModal.classList.add('active');
+
+            unlockNicknames();
+            launchCelebration();
+        };
+
+        function unlockNicknames() {
+            const nicknameTags = document.getElementById('nicknameTags');
+            const nicknameLockMsg = document.getElementById('nicknameLockMsg');
+
+            if (nicknameTags) nicknameTags.classList.remove('locked');
+            if (nicknameLockMsg) nicknameLockMsg.style.display = 'none';
+        }
+
+        window.closeCelebration = function() {
+            const celebrationModal = document.getElementById('celebrationModal');
+            if (celebrationModal) celebrationModal.classList.remove('active');
+        };
+
+        function initFlyingPhotos() {
+            for (let i = 1; i <= 3; i++) {
+                const flyBox = document.getElementById(`flyBox${i}`);
+                if (flyBox) {
+                    const src = activeMedia[(i - 1) % activeMedia.length];
+                    if (isVideoFile(src)) {
+                        flyBox.innerHTML = `<video src="${src}" autoplay muted loop playsinline></video>`;
+                    } else {
+                        flyBox.innerHTML = `<img src="${src}" alt="Floating Memory" onerror="this.src='${fallbackList[i % fallbackList.length]}'">`;
+                    }
+                }
+            }
+        }
+
+        function initSlideshow() {
+            for (let i = 0; i < 4; i++) {
+                updateCard(i);
+            }
+
+            let rotateSlot = 0;
+            setInterval(() => {
+                const card = document.getElementById(`card-${rotateSlot}`);
+                if (card) {
+                    card.classList.add('fade-out');
+
+                    setTimeout(() => {
+                        updateCard(rotateSlot);
+                        card.classList.remove('fade-out');
+                        rotateSlot = (rotateSlot + 1) % 4;
+                    }, 1000);
+                }
+            }, 4500);
+        }
+
+        function updateCard(slotIndex) {
+            const photoBox = document.querySelector(`#card-${slotIndex} .photo-box`);
+            const capElement = document.getElementById(`cap-${slotIndex}`);
+
+            if (photoBox && capElement) {
+                const currentMedia = activeMedia[mediaIndex % activeMedia.length];
+
+                if (isVideoFile(currentMedia)) {
+                    photoBox.innerHTML = `<video src="${currentMedia}" autoplay muted loop playsinline></video>`;
+                } else {
+                    photoBox.innerHTML = `<img src="${currentMedia}" alt="Memory" onerror="this.src='${fallbackList[mediaIndex % fallbackList.length]}'">`;
+                }
+
+                capElement.textContent = `Sweet Memory #${(mediaIndex % activeMedia.length) + 1}`;
+            }
+
+            mediaIndex++;
+        }
+
+        function checkTargetTime() {
+            if (isRevealed) return;
+
+            const now = new Date();
+            if (now >= TARGET_REVEAL_DATE) {
+                window.revealNameNow();
+            } else {
+                const diff = TARGET_REVEAL_DATE - now;
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+                const label = document.getElementById('countdownLabel');
+                const lockMsg = document.getElementById('nicknameLockMsg');
+
+                let timeStr = "";
+                if (hours >= 24) {
+                    const days = Math.floor(hours / 24);
+                    const remainingHours = hours % 24;
+                    timeStr = `${days}d ${remainingHours}h`;
+                } else {
+                    timeStr = `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+                }
+
+                if (label) label.textContent = `🔒 Reveals in ${timeStr}`;
+                if (lockMsg) lockMsg.textContent = `🔒 Unlocks in ${timeStr}`;
+            }
+        }
+
+        function launchCelebration() {
+            const symbols = ['🌸', '✨', '💖', '👑', '🎉', '🎆', '👶', '🤣', '🤪'];
+            for (let i = 0; i < 65; i++) {
+                setTimeout(() => {
+                    const el = document.createElement('div');
+                    el.style.position = 'fixed';
+                    el.style.fontSize = `${2 + Math.random() * 2.5}rem`;
+                    el.style.left = `${Math.random() * 100}vw`;
+                    el.style.top = `-50px`;
+                    el.style.zIndex = '999';
+                    el.style.pointerEvents = 'none';
+                    el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+
+                    el.animate([
+                        { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                        { transform: `translateY(105vh) rotate(${360 + Math.random() * 360}deg)`, opacity: 0 }
+                    ], {
+                        duration: 3500 + Math.random() * 2000,
+                        easing: 'ease-out'
+                    });
+
+                    document.body.appendChild(el);
+                    setTimeout(() => el.remove(), 6000);
+                }, i * 80);
+            }
+        }
+
+        let idleTimer = null;
+        let ssInterval = null;
+        const IDLE_TIME_MS = 45000;
+        let ssMediaIdx = 0;
+
+        function startScreensaver() {
+            const ssOverlay = document.getElementById('screensaverOverlay');
+            if (!ssOverlay || ssOverlay.classList.contains('active')) return;
+
+            ssOverlay.classList.add('active');
+            updateScreensaverMedia();
+
+            if (ssInterval) clearInterval(ssInterval);
+            ssInterval = setInterval(updateScreensaverMedia, 5000);
+        }
+
+        function stopScreensaver() {
+            const ssOverlay = document.getElementById('screensaverOverlay');
+            if (ssOverlay) ssOverlay.classList.remove('active');
+
+            if (ssInterval) {
+                clearInterval(ssInterval);
+                ssInterval = null;
+            }
+        }
+
+        function updateScreensaverMedia() {
+            const container = document.getElementById('ssContent');
+            if (!container || !activeMedia.length) return;
+
+            const mediaSrc = activeMedia[ssMediaIdx % activeMedia.length];
+            ssMediaIdx++;
+
+            if (isVideoFile(mediaSrc)) {
+                container.innerHTML = `<video src="${mediaSrc}" class="screensaver-media" autoplay muted loop playsinline></video>`;
+            } else {
+                container.innerHTML = `<img src="${mediaSrc}" class="screensaver-media" alt="Screensaver Photo" onerror="this.src='${fallbackList[0]}'">`;
+            }
+        }
+
+        function resetIdleTimer() {
+            stopScreensaver();
+            if (idleTimer) clearTimeout(idleTimer);
+            idleTimer = setTimeout(startScreensaver, IDLE_TIME_MS);
+        }
+
+        ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll', 'click'].forEach(evt => {
+            window.addEventListener(evt, resetIdleTimer, { passive: true });
         });
 
-        if (files.length > 0) {
-          mediaList = files.map(f => {
-            const isVideo = f.name.endsWith('.mp4') || f.name.endsWith('.webm') || f.name.endsWith('.mov');
-            return {
-              type: isVideo ? 'video' : 'image',
-              url: f.download_url
-            };
-          });
-        } else {
-          mediaList = FALLBACK_MEDIA;
-        }
-      } catch (err) {
-        console.log('GitHub Fetch error, fallback active:', err);
-        mediaList = FALLBACK_MEDIA;
-      }
-      initSlideshow();
-      initFlyingPhotos();
-    }
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadGitHubMedia();
 
-    // Initialize 4 Hanging Polaroid Cards
-    let cardIndices = [0, 1, 2, 3];
-    function initSlideshow() {
-      const grid = document.getElementById('polaroidGrid');
-      grid.innerHTML = '';
+            initFlyingPhotos();
+            initSlideshow();
+            checkTargetTime();
+            setInterval(checkTargetTime, 1000);
 
-      for (let i = 0; i < 4; i++) {
-        const card = document.createElement('div');
-        card.className = 'polaroid-card';
-        card.id = `card-${i}`;
+            const startOverlay = document.getElementById('startOverlay');
+            if (startOverlay) {
+                startOverlay.addEventListener('click', window.startTVDisplay);
+            }
 
-        const pin = document.createElement('div');
-        pin.className = 'polaroid-pin';
-        card.appendChild(pin);
+            const manualBtn = document.getElementById('manualRevealBtn');
+            if (manualBtn) {
+                manualBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    window.revealNameNow();
+                });
+            }
 
-        const mediaContainer = document.createElement('div');
-        mediaContainer.id = `card-media-${i}`;
-        card.appendChild(mediaContainer);
+            const dismissBtn = document.getElementById('dismissModalBtn');
+            if (dismissBtn) {
+                dismissBtn.addEventListener('click', window.closeCelebration);
+            }
 
-        grid.appendChild(card);
-
-        updateCard(i, cardIndices[i]);
-      }
-
-      // Rotate slideshow every 4.5 seconds
-      setInterval(() => {
-        for (let i = 0; i < 4; i++) {
-          cardIndices[i] = (cardIndices[i] + 1) % mediaList.length;
-          updateCard(i, cardIndices[i]);
-        }
-      }, 4500);
-    }
-
-    // Update individual Polaroid card content
-    function updateCard(cardIndex, mediaIndex) {
-      const container = document.getElementById(`card-media-${cardIndex}`);
-      if (!container || !mediaList.length) return;
-
-      const item = mediaList[mediaIndex % mediaList.length];
-      container.style.opacity = '0';
-
-      setTimeout(() => {
-        if (item.type === 'video') {
-          container.innerHTML = `<video class="polaroid-media" src="${item.url}" autoplay loop muted playsinline></video>`;
-        } else {
-          container.innerHTML = `<img class="polaroid-media" src="${item.url}" alt="Baby memory">`;
-        }
-        container.style.transition = 'opacity 0.5s ease';
-        container.style.opacity = '1';
-      }, 300);
-    }
-
-    // Floating Photo Frames Across Screen
-    function initFlyingPhotos() {
-      const boxes = [document.getElementById('flyBox1'), document.getElementById('flyBox2'), document.getElementById('flyBox3')];
-      boxes.forEach((box, idx) => {
-        if (!box) return;
-
-        let posX = (idx * 30) + 10;
-        let posY = (idx * 25) + 15;
-        let dirX = (idx % 2 === 0 ? 0.08 : -0.08);
-        let dirY = 0.05;
-
-        const item = mediaList[idx % mediaList.length];
-        if (item.type === 'video') {
-          box.innerHTML = `<video src="${item.url}" autoplay loop muted playsinline></video>`;
-        } else {
-          box.innerHTML = `<img src="${item.url}" alt="Floating photo">`;
-        }
-
-        function animate() {
-          posX += dirX;
-          posY += dirY;
-
-          if (posX <= 2 || posX >= 85) dirX *= -1;
-          if (posY <= 5 || posY >= 80) dirY *= -1;
-
-          box.style.left = posX + 'vw';
-          box.style.top = posY + 'vh';
-          requestAnimationFrame(animate);
-        }
-        animate();
-      });
-    }
-
-    // Background Floating Emojis
-    function createEmojiBackground() {
-      const emojis = ['👶', '🍼', '🧸', '🎀', '💖', '✨', '👑', '🌸'];
-      setInterval(() => {
-        const emoji = document.createElement('div');
-        emoji.className = 'emoji-bg';
-        emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-        emoji.style.left = Math.random() * 95 + 'vw';
-        emoji.style.animationDuration = (8 + Math.random() * 6) + 's';
-        document.body.appendChild(emoji);
-
-        setTimeout(() => { emoji.remove(); }, 14000);
-      }, 1500);
-    }
-
-    // Countdown Timer Check
-    function checkTargetTime() {
-      const now = Date.now();
-      const diff = TARGET_TIME - now;
-
-      if (diff <= 0) {
-        document.getElementById('days').innerText = '00';
-        document.getElementById('hours').innerText = '00';
-        document.getElementById('minutes').innerText = '00';
-        document.getElementById('seconds').innerText = '00';
-
-        if (!isRevealed) {
-          revealNameNow();
-        }
-        return;
-      }
-
-      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const s = Math.floor((diff % (1000 * 60)) / 1000);
-
-      document.getElementById('days').innerText = String(d).padStart(2, '0');
-      document.getElementById('hours').innerText = String(h).padStart(2, '0');
-      document.getElementById('minutes').innerText = String(m).padStart(2, '0');
-      document.getElementById('seconds').innerText = String(s).padStart(2, '0');
-    }
-
-    // Name Reveal & Nickname Unlock
-    function revealNameNow() {
-      isRevealed = true;
-      document.getElementById('revealModal').style.display = 'flex';
-      launchCelebration();
-
-      // Unlock Nicknames Footer
-      const nicknameContainer = document.getElementById('nicknameList');
-      nicknameContainer.innerHTML = NICKNAMES.map(name => `<span class="nickname-tag">${name}</span>`).join('');
-    }
-
-    function closeModal() {
-      document.getElementById('revealModal').style.display = 'none';
-    }
-
-    // Celebration Emoji Shower
-    function launchCelebration() {
-      const symbols = ['🎉', '🎀', '🌸', '✨', '💖', '👶', '👑'];
-      for (let i = 0; i < 50; i++) {
-        setTimeout(() => {
-          const item = document.createElement('div');
-          item.className = 'celebration-item';
-          item.innerText = symbols[Math.floor(Math.random() * symbols.length)];
-          item.style.left = Math.random() * 95 + 'vw';
-          item.style.animationDuration = (3 + Math.random() * 3) + 's';
-          document.body.appendChild(item);
-
-          setTimeout(() => { item.remove(); }, 6000);
-        }, i * 100);
-      }
-    }
-
-    // Initialize Page
-    window.onload = () => {
-      loadGitHubMedia();
-      createEmojiBackground();
-      checkTargetTime();
-      setInterval(checkTargetTime, 1000);
-    };
-  </script>
+            resetIdleTimer();
+        });
+    </script>
 </body>
 </html>
