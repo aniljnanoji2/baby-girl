@@ -712,7 +712,7 @@
         <div class="nickname-tags-wrapper">
             <div class="nickname-lock-msg" id="nicknameLockMsg">🔒 Unlocks at 1:00 PM IST</div>
             <div class="nickname-tags locked" id="nicknameTags">
-                <span class="nickname-pill">Vedu 😂</span>
+                <span class="nickname-pill">Vedu 💖</span>
                 <span class="nickname-pill">Veda ✨</span>
                 <span class="nickname-pill">Vedamma 💖</span>
                 <span class="nickname-pill">Gundi 🤪</span>
@@ -729,7 +729,7 @@
             <div class="grand-title">✨ Welcome Little Princess ✨</div>
             <div class="grand-name">VEDANSHI</div>
             <div class="grand-kannada-name">ವೇದಾಂಶಿ</div>
-            <button class="dismiss-btn" id="dismissModalBtn">View Photos 🌸</button>
+            <button class="dismiss-btn" id="dismissModalBtn">Memories 🌸</button>
         </div>
     </div>
 
@@ -815,13 +815,36 @@
             }
         }
 
+        function playMusicSafely() {
+            const music = document.getElementById('bgMusic');
+            const muteBtn = document.getElementById('muteToggleBtn');
+            if (!music) return;
+
+            music.muted = isMuted;
+            const playPromise = music.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    if (muteBtn) {
+                        muteBtn.textContent = isMuted ? '🔇 Unmute Music' : '🔊 Mute Music';
+                    }
+                }).catch(e => {
+                    console.log("Audio waiting for first interaction:", e);
+                });
+            }
+        }
+
         window.toggleMute = function() {
             const music = document.getElementById('bgMusic');
             const muteBtn = document.getElementById('muteToggleBtn');
             if (!music || !muteBtn) return;
 
-            isMuted = !isMuted;
-            music.muted = isMuted;
+            if (music.paused) {
+                isMuted = false;
+                playMusicSafely();
+            } else {
+                isMuted = !isMuted;
+                music.muted = isMuted;
+            }
 
             if (isMuted) {
                 muteBtn.textContent = '🔇 Unmute Music';
@@ -978,13 +1001,20 @@
 
             enableScreenWakeLock();
 
-            // Attempt autoplay music directly
-            const music = document.getElementById('bgMusic');
-            if (music) {
-                music.play().catch(e => {
-                    console.log("Browser policy blocked direct audio play on load:", e);
-                });
-            }
+            // Attempt initial play
+            playMusicSafely();
+
+            // Auto-start music on first interaction (click, tap, scroll) anywhere on page
+            const handleFirstUserInteraction = () => {
+                playMusicSafely();
+                window.removeEventListener('click', handleFirstUserInteraction);
+                window.removeEventListener('touchstart', handleFirstUserInteraction);
+                window.removeEventListener('scroll', handleFirstUserInteraction);
+            };
+
+            window.addEventListener('click', handleFirstUserInteraction);
+            window.addEventListener('touchstart', handleFirstUserInteraction);
+            window.addEventListener('scroll', handleFirstUserInteraction);
 
             const muteBtn = document.getElementById('muteToggleBtn');
             if (muteBtn) {
