@@ -500,60 +500,6 @@
             0% { transform: scale(1); }
             100% { transform: scale(1.08); }
         }
-
-        .screensaver-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #0d0410;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.8s ease;
-        }
-
-        .screensaver-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .screensaver-content {
-            width: 85vw;
-            height: 80vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .screensaver-media {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            border-radius: 12px;
-            box-shadow: 0 0 60px rgba(255, 117, 140, 0.4);
-            animation: ssZoomIn 1s ease-in-out;
-        }
-
-        .screensaver-hint {
-            position: absolute;
-            bottom: 25px;
-            color: rgba(255, 215, 0, 0.7);
-            font-size: 1.1rem;
-            font-family: 'Poppins', sans-serif;
-            letter-spacing: 1px;
-            text-shadow: 0 0 10px rgba(0,0,0,0.8);
-        }
-
-        @keyframes ssZoomIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
     </style>
 </head>
 <body>
@@ -593,7 +539,6 @@
                 <span class="countdown-text" id="countdownLabel">🔒 Reveals at 1:00 PM IST</span>
                 <button class="manual-reveal-btn" id="manualRevealBtn">👑 Reveal Now</button>
             </div>
-            <!-- REVEALED BADGE -->
             <div class="revealed-name-badge" id="nameBadge">
                 👑 VEDANSHI <span class="kannada-inline">(ವೇದಾಂಶಿ)</span>
             </div>
@@ -638,7 +583,7 @@
         <div class="nickname-tags-wrapper">
             <div class="nickname-lock-msg" id="nicknameLockMsg">🔒 Unlocks at 1:00 PM IST</div>
             <div class="nickname-tags locked" id="nicknameTags">
-                <span class="nickname-pill">Vedu 😂</span>
+                <span class="nickname-pill">Vedu 💖 </span>
                 <span class="nickname-pill">Veda ✨</span>
                 <span class="nickname-pill">Vedamma 💖</span>
                 <span class="nickname-pill">Gundi 🤪</span>
@@ -648,7 +593,6 @@
         </div>
     </div>
 
-    <!-- GRAND CELEBRATION MODAL -->
     <div class="reveal-modal-overlay" id="celebrationModal">
         <div class="celebration-card">
             <div class="grand-title">✨ Welcome Little Princess ✨</div>
@@ -656,11 +600,6 @@
             <div class="grand-kannada-name">ವೇದಾಂಶಿ</div>
             <button class="dismiss-btn" id="dismissModalBtn">Back to Memories 🌸</button>
         </div>
-    </div>
-
-    <div class="screensaver-overlay" id="screensaverOverlay">
-        <div class="screensaver-content" id="ssContent"></div>
-        <div class="screensaver-hint">✨ Move remote, touch screen, or press any key to exit screensaver ✨</div>
     </div>
 
     <audio id="bgMusic" loop preload="auto">
@@ -683,6 +622,24 @@
         let activeMedia = [...fallbackList];
         let mediaIndex = 0;
         let isRevealed = false;
+        let wakeLock = null;
+
+        // INVISIBLE WAKE LOCK: Keeps TV screen ON continuously without sleeping
+        async function enableScreenWakeLock() {
+            try {
+                if ('wakeLock' in navigator) {
+                    wakeLock = await navigator.wakeLock.request('screen');
+                }
+            } catch (err) {
+                console.log('Wake lock active via media playback');
+            }
+        }
+
+        document.addEventListener('visibilitychange', () => {
+            if (wakeLock !== null && document.visibilityState === 'visible') {
+                enableScreenWakeLock();
+            }
+        });
 
         function isVideoFile(url) {
             return /\.(mp4|webm|mov)$/i.test(url);
@@ -739,8 +696,8 @@
             if (document.documentElement.requestFullscreen) {
                 document.documentElement.requestFullscreen().catch(() => {});
             }
-            
-            resetIdleTimer();
+
+            enableScreenWakeLock();
         };
 
         window.revealNameNow = function() {
@@ -881,56 +838,6 @@
             }
         }
 
-        let idleTimer = null;
-        let ssInterval = null;
-        const IDLE_TIME_MS = 45000;
-        let ssMediaIdx = 0;
-
-        function startScreensaver() {
-            const ssOverlay = document.getElementById('screensaverOverlay');
-            if (!ssOverlay || ssOverlay.classList.contains('active')) return;
-
-            ssOverlay.classList.add('active');
-            updateScreensaverMedia();
-
-            if (ssInterval) clearInterval(ssInterval);
-            ssInterval = setInterval(updateScreensaverMedia, 5000);
-        }
-
-        function stopScreensaver() {
-            const ssOverlay = document.getElementById('screensaverOverlay');
-            if (ssOverlay) ssOverlay.classList.remove('active');
-
-            if (ssInterval) {
-                clearInterval(ssInterval);
-                ssInterval = null;
-            }
-        }
-
-        function updateScreensaverMedia() {
-            const container = document.getElementById('ssContent');
-            if (!container || !activeMedia.length) return;
-
-            const mediaSrc = activeMedia[ssMediaIdx % activeMedia.length];
-            ssMediaIdx++;
-
-            if (isVideoFile(mediaSrc)) {
-                container.innerHTML = `<video src="${mediaSrc}" class="screensaver-media" autoplay muted loop playsinline></video>`;
-            } else {
-                container.innerHTML = `<img src="${mediaSrc}" class="screensaver-media" alt="Screensaver Photo" onerror="this.src='${fallbackList[0]}'">`;
-            }
-        }
-
-        function resetIdleTimer() {
-            stopScreensaver();
-            if (idleTimer) clearTimeout(idleTimer);
-            idleTimer = setTimeout(startScreensaver, IDLE_TIME_MS);
-        }
-
-        ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll', 'click'].forEach(evt => {
-            window.addEventListener(evt, resetIdleTimer, { passive: true });
-        });
-
         document.addEventListener('DOMContentLoaded', async () => {
             await loadGitHubMedia();
 
@@ -956,8 +863,6 @@
             if (dismissBtn) {
                 dismissBtn.addEventListener('click', window.closeCelebration);
             }
-
-            resetIdleTimer();
         });
     </script>
 </body>
