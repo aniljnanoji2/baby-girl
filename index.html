@@ -144,31 +144,30 @@
             letter-spacing: 1px;
         }
 
-        .header-controls {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
+        /* Bottom Fixed Mute Button */
         .mute-btn {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(10px);
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
             color: #ffffff;
-            border: 1.5px solid rgba(255, 255, 255, 0.25);
-            padding: 8px 18px;
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 22px;
             border-radius: 30px;
             font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         .mute-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.3);
             transform: scale(1.05);
         }
 
@@ -529,7 +528,7 @@
         /* MOBILE RESPONSIVENESS */
         @media (max-width: 768px) {
             body {
-                padding: 12px 8px;
+                padding: 12px 8px 70px 8px; /* Added extra bottom padding so mute button doesn't overlap footer content */
             }
 
             .top-bar {
@@ -538,14 +537,15 @@
                 text-align: center;
             }
 
-            .header-controls {
-                flex-direction: column;
-                width: 100%;
-                gap: 10px;
-            }
-
             .header-title h1 {
                 font-size: 2.2rem;
+            }
+
+            .mute-btn {
+                bottom: 12px;
+                right: 12px;
+                padding: 8px 16px;
+                font-size: 0.85rem;
             }
 
             .name-reveal-widget {
@@ -711,17 +711,13 @@
             <h1> ನಮ್ಮ ಮನೆಯ ಸರಸ್ವತಿ</h1>
         </div>
 
-        <div class="header-controls">
-            <button class="mute-btn" id="muteToggleBtn">🔊 Mute</button>
-
-            <div class="name-reveal-widget" id="revealWidget">
-                <div id="lockedWidget" style="display: flex; align-items: center; gap: 15px;">
-                    <span class="countdown-text" id="countdownLabel">🔒 Reveals at 1:00 PM IST</span>
-                    <button class="manual-reveal-btn" id="manualRevealBtn">👑 Reveal Now</button>
-                </div>
-                <div class="revealed-name-badge" id="nameBadge">
-                    👑 VEDANSHI <span class="kannada-inline">(ವೇದಾಂಶಿ)</span>
-                </div>
+        <div class="name-reveal-widget" id="revealWidget">
+            <div id="lockedWidget" style="display: flex; align-items: center; gap: 15px;">
+                <span class="countdown-text" id="countdownLabel">🔒 Reveals at 1:00 PM IST</span>
+                <button class="manual-reveal-btn" id="manualRevealBtn">👑 Reveal Now</button>
+            </div>
+            <div class="revealed-name-badge" id="nameBadge">
+                👑 VEDANSHI <span class="kannada-inline">(ವೇದಾಂಶಿ)</span>
             </div>
         </div>
     </div>
@@ -773,6 +769,8 @@
             </div>
         </div>
     </div>
+
+    <button class="mute-btn" id="muteToggleBtn">🔊 Mute Music</button>
 
     <div class="reveal-modal-overlay" id="celebrationModal">
         <div class="celebration-card">
@@ -890,9 +888,9 @@
             music.muted = isMuted;
 
             if (isMuted) {
-                muteBtn.textContent = '🔇 Unmute';
+                muteBtn.textContent = '🔇 Unmute Music';
             } else {
-                muteBtn.textContent = '🔊 Mute';
+                muteBtn.textContent = '🔊 Mute Music';
             }
         };
 
