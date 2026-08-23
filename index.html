@@ -144,7 +144,6 @@
             letter-spacing: 1px;
         }
 
-        /* Bottom Fixed Mute Button */
         .mute-btn {
             position: fixed;
             bottom: 20px;
@@ -490,45 +489,9 @@
 
         .dismiss-btn:hover { background: #fff; color: #ff477e; }
 
-        .start-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(10, 5, 20, 0.96);
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            cursor: pointer;
-            padding: 20px;
-        }
-
-        .start-btn {
-            background: linear-gradient(135deg, #ff477e, #ff758c);
-            color: #fff;
-            font-size: 2rem;
-            font-weight: 800;
-            padding: 20px 50px;
-            border-radius: 60px;
-            border: 3px solid #fff;
-            box-shadow: 0 0 30px rgba(255, 71, 126, 0.8);
-            margin-top: 25px;
-            animation: pulse 1.5s infinite alternate;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.08); }
-        }
-
-        /* MOBILE RESPONSIVENESS */
         @media (max-width: 768px) {
             body {
-                padding: 12px 8px 70px 8px; /* Added extra bottom padding so mute button doesn't overlap footer content */
+                padding: 12px 8px 70px 8px;
             }
 
             .top-bar {
@@ -652,11 +615,6 @@
                 font-size: 0.95rem;
             }
 
-            .start-btn {
-                font-size: 1.3rem;
-                padding: 14px 32px;
-            }
-
             .flying-photo-layer {
                 display: none;
             }
@@ -698,12 +656,6 @@
         <div class="fly-card fly-1" id="flyBox1"></div>
         <div class="fly-card fly-2" id="flyBox2"></div>
         <div class="fly-card fly-3" id="flyBox3"></div>
-    </div>
-
-    <div class="start-overlay" id="startOverlay">
-        <h1>✨ Welcome to the Celebration ✨</h1>
-        <p style="color: #ccc; margin-top: 10px;">Tap anywhere / Press OK to launch</p>
-        <button class="start-btn">▶ START SHOW</button>
     </div>
 
     <div class="top-bar">
@@ -760,7 +712,7 @@
         <div class="nickname-tags-wrapper">
             <div class="nickname-lock-msg" id="nicknameLockMsg">🔒 Unlocks at 1:00 PM IST</div>
             <div class="nickname-tags locked" id="nicknameTags">
-                <span class="nickname-pill">Vedu 💖</span>
+                <span class="nickname-pill">Vedu 😂</span>
                 <span class="nickname-pill">Veda ✨</span>
                 <span class="nickname-pill">Vedamma 💖</span>
                 <span class="nickname-pill">Gundi 🤪</span>
@@ -777,7 +729,7 @@
             <div class="grand-title">✨ Welcome Little Princess ✨</div>
             <div class="grand-name">VEDANSHI</div>
             <div class="grand-kannada-name">ವೇದಾಂಶಿ</div>
-            <button class="dismiss-btn" id="dismissModalBtn">Memories 🌸</button>
+            <button class="dismiss-btn" id="dismissModalBtn">View Photos 🌸</button>
         </div>
     </div>
 
@@ -810,7 +762,7 @@
                     wakeLock = await navigator.wakeLock.request('screen');
                 }
             } catch (err) {
-                console.log('Wake lock active via media playback');
+                console.log('Wake lock status:', err);
             }
         }
 
@@ -862,22 +814,6 @@
                 console.warn("Could not fetch GitHub directory dynamically, falling back to defaults.", err);
             }
         }
-
-        window.startTVDisplay = function() {
-            const overlay = document.getElementById('startOverlay');
-            if (overlay) overlay.style.display = 'none';
-
-            const music = document.getElementById('bgMusic');
-            if (music) {
-                music.play().catch(e => console.log("Audio play deferred:", e));
-            }
-
-            if (document.documentElement.requestFullscreen && window.innerWidth > 768) {
-                document.documentElement.requestFullscreen().catch(() => {});
-            }
-
-            enableScreenWakeLock();
-        };
 
         window.toggleMute = function() {
             const music = document.getElementById('bgMusic');
@@ -1040,9 +976,14 @@
             checkTargetTime();
             setInterval(checkTargetTime, 1000);
 
-            const startOverlay = document.getElementById('startOverlay');
-            if (startOverlay) {
-                startOverlay.addEventListener('click', window.startTVDisplay);
+            enableScreenWakeLock();
+
+            // Attempt autoplay music directly
+            const music = document.getElementById('bgMusic');
+            if (music) {
+                music.play().catch(e => {
+                    console.log("Browser policy blocked direct audio play on load:", e);
+                });
             }
 
             const muteBtn = document.getElementById('muteToggleBtn');
