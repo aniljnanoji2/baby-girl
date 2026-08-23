@@ -7,6 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@600;800;900&family=Noto+Sans+Kannada:wght@700&display=swap" rel="stylesheet">
 
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             background: radial-gradient(circle at center, #36173d 0%, #1a0a1f 60%, #0d0410 100%) !important;
             color: #ffffff;
@@ -16,22 +22,14 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 10px;
-            box-sizing: border-box;
             overflow-x: hidden;
-        }
-
-        .nickname-container, .nicknames-bar {
-            position: relative;
-            margin-top: auto;
-            margin-bottom: 15px;
-            z-index: 999;
-            max-width: 90vw;
+            font-family: 'Poppins', sans-serif;
         }
 
         .glow-bg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
             top: 0;
             left: 0;
             background: 
@@ -43,7 +41,7 @@
         }
 
         .floating-emoji-layer {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -71,21 +69,15 @@
         .e8 { left: 95%; font-size: 2.5rem; animation-duration: 21s; animation-delay: 7s; }
 
         @keyframes floatUp {
-            0% {
-                transform: translateY(0) translateX(0) rotate(0deg) scale(0.8);
-                opacity: 0;
-            }
+            0% { transform: translateY(0) translateX(0) rotate(0deg) scale(0.8); opacity: 0; }
             15% { opacity: 0.55; }
             50% { transform: translateY(-55vh) translateX(25px) rotate(180deg) scale(1.1); }
             85% { opacity: 0.55; }
-            100% {
-                transform: translateY(-115vh) translateX(-20px) rotate(360deg) scale(0.9);
-                opacity: 0;
-            }
+            100% { transform: translateY(-115vh) translateX(-20px) rotate(360deg) scale(0.9); opacity: 0; }
         }
 
         .floating-photo-layer {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -141,6 +133,7 @@
             justify-content: space-between;
             width: 100%;
             z-index: 10;
+            padding: 0 10px;
         }
 
         .header-title h1 {
@@ -218,6 +211,7 @@
             justify-content: center;
             z-index: 5;
             width: 100%;
+            margin: 15px 0;
         }
 
         .thread-container {
@@ -409,6 +403,7 @@
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.8s ease;
+            padding: 20px;
         }
 
         .reveal-modal-overlay.active {
@@ -420,6 +415,7 @@
             text-align: center;
             transform: scale(0.7);
             transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 100%;
         }
 
         .reveal-modal-overlay.active .celebration-card {
@@ -481,6 +477,7 @@
             justify-content: center;
             text-align: center;
             cursor: pointer;
+            padding: 20px;
         }
 
         .start-btn {
@@ -499,6 +496,152 @@
         @keyframes pulse {
             0% { transform: scale(1); }
             100% { transform: scale(1.08); }
+        }
+
+        /* MOBILE RESPONSIBENESS (Mobile Phones & Tablets) */
+        @media (max-width: 768px) {
+            body {
+                padding: 12px 8px;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+
+            .header-title h1 {
+                font-size: 2.2rem;
+            }
+
+            .name-reveal-widget {
+                padding: 8px 16px;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .countdown-text {
+                font-size: 0.85rem;
+            }
+
+            .manual-reveal-btn {
+                padding: 6px 14px;
+                font-size: 0.85rem;
+            }
+
+            .revealed-name-badge {
+                font-size: 1.4rem;
+                letter-spacing: 1px;
+            }
+
+            .kannada-inline {
+                font-size: 1.2rem;
+            }
+
+            .thread-container {
+                height: auto;
+                min-height: auto;
+                padding: 10px 0;
+            }
+
+            .twine-line {
+                display: none; /* Hide top string on small screen grid view */
+            }
+
+            .polaroid-grid {
+                flex-wrap: wrap;
+                gap: 14px;
+                justify-content: center;
+                padding-top: 5px;
+            }
+
+            .polaroid-card {
+                width: calc(50% - 10px);
+                max-width: 160px;
+                height: 205px;
+                padding: 8px 8px 12px 8px;
+                transform: none !important;
+            }
+
+            .clothespin {
+                width: 12px;
+                height: 24px;
+                top: -12px;
+            }
+
+            .photo-box {
+                height: 140px;
+            }
+
+            .polaroid-caption {
+                font-size: 1.1rem;
+                margin-top: 4px;
+            }
+
+            .nickname-footer {
+                flex-direction: column;
+                gap: 8px;
+                padding: 10px 14px;
+                width: 98%;
+            }
+
+            .nickname-title {
+                font-size: 1.4rem;
+            }
+
+            .nickname-pill {
+                padding: 4px 10px;
+                font-size: 0.8rem;
+            }
+
+            .nickname-lock-msg {
+                font-size: 0.85rem;
+                padding: 3px 12px;
+            }
+
+            .grand-title {
+                font-size: 1.8rem;
+            }
+
+            .grand-name {
+                font-size: 2.8rem;
+                letter-spacing: 4px;
+            }
+
+            .grand-kannada-name {
+                font-size: 1.8rem;
+                margin-bottom: 20px;
+            }
+
+            .dismiss-btn {
+                padding: 8px 24px;
+                font-size: 0.95rem;
+            }
+
+            .start-btn {
+                font-size: 1.3rem;
+                padding: 14px 32px;
+            }
+
+            .flying-photo-layer {
+                display: none; /* Disable background floating photos on phone for cleaner look */
+            }
+        }
+
+        @media (max-width: 380px) {
+            .polaroid-card {
+                width: 135px;
+                height: 185px;
+            }
+
+            .photo-box {
+                height: 125px;
+            }
+
+            .grand-name {
+                font-size: 2.3rem;
+                letter-spacing: 2px;
+            }
         }
     </style>
 </head>
@@ -525,7 +668,7 @@
 
     <div class="start-overlay" id="startOverlay">
         <h1>✨ Welcome to the Celebration ✨</h1>
-        <p style="color: #ccc; margin-top: 10px;">Press OK on TV Remote / Tap to Launch</p>
+        <p style="color: #ccc; margin-top: 10px;">Tap anywhere / Press OK to launch</p>
         <button class="start-btn">▶ START SHOW</button>
     </div>
 
@@ -583,7 +726,7 @@
         <div class="nickname-tags-wrapper">
             <div class="nickname-lock-msg" id="nicknameLockMsg">🔒 Unlocks at 1:00 PM IST</div>
             <div class="nickname-tags locked" id="nicknameTags">
-                <span class="nickname-pill">Vedu 💖 </span>
+                <span class="nickname-pill">Vedu 💖</span>
                 <span class="nickname-pill">Veda ✨</span>
                 <span class="nickname-pill">Vedamma 💖</span>
                 <span class="nickname-pill">Gundi 🤪</span>
@@ -624,7 +767,6 @@
         let isRevealed = false;
         let wakeLock = null;
 
-        // INVISIBLE WAKE LOCK: Keeps TV screen ON continuously without sleeping
         async function enableScreenWakeLock() {
             try {
                 if ('wakeLock' in navigator) {
@@ -693,7 +835,7 @@
                 music.play().catch(e => console.log("Audio play deferred:", e));
             }
 
-            if (document.documentElement.requestFullscreen) {
+            if (document.documentElement.requestFullscreen && window.innerWidth > 768) {
                 document.documentElement.requestFullscreen().catch(() => {});
             }
 
@@ -776,7 +918,7 @@
                     photoBox.innerHTML = `<img src="${currentMedia}" alt="Memory" onerror="this.src='${fallbackList[mediaIndex % fallbackList.length]}'">`;
                 }
 
-                capElement.textContent = `Sweet Memory #${(mediaIndex % activeMedia.length) + 1}`;
+                capElement.textContent = `Memory #${(mediaIndex % activeMedia.length) + 1}`;
             }
 
             mediaIndex++;
@@ -817,7 +959,7 @@
                 setTimeout(() => {
                     const el = document.createElement('div');
                     el.style.position = 'fixed';
-                    el.style.fontSize = `${2 + Math.random() * 2.5}rem`;
+                    el.style.fontSize = `${1.5 + Math.random() * 2}rem`;
                     el.style.left = `${Math.random() * 100}vw`;
                     el.style.top = `-50px`;
                     el.style.zIndex = '999';
